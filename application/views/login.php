@@ -2,7 +2,12 @@
     <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
         <div class="row w-100">
             <div class="col-lg-4 mx-auto">
-                <div class="auto-form-wrapper">
+                <div class="auto-form-wrapper ">
+                <div class="text-center">
+                <h2>E-RAPORT</h2>
+                <h3>SD SANTA MARIA TIMIKA</h3>
+                </div>
+                <br>
                     <?php echo $this->session->flashdata('notif'); ?>
                     <form action="<?php echo base_url('login/aksi_login');?>" method="POST">
                         <div class="form-group">
@@ -31,6 +36,7 @@
                             <select name="level" class="form-control">
                                 <option value="guru"> GURU </option>
                                 <option value="admin"> ADMIN </option>
+                                <option value="orangtua"> ORANGTUA/WALI </option>
                             </select>
                         </div>
                         <div class="form-group">
