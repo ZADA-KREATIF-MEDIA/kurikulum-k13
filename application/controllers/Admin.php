@@ -1546,7 +1546,7 @@ class Admin extends CI_Controller {
 
 				$this->m_admin->insert_dataTo($data,'data_guru');
 
-				$this->setmessage('Alhamdulillah yaa, Data Guru berhasil ditambahkan :)','success');
+				$this->setmessage('Data Guru Berhasil Di tambahkan','success');
 				redirect('admin/data_guru');
 			}
 		}
@@ -3111,5 +3111,10 @@ public function setmessage($message,$label)
 		$this->session->set_flashdata('notif','<div class="alert alert-'.$alert.' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> '.$txt.$message.'</div>');
 	}
 
+	public function form_tambah_guru()
+	{
+		$data['content'] = "admin/v_data_guru_tambah";
+		$this->load->view('admin/index',$data);
+	}
 
 }
