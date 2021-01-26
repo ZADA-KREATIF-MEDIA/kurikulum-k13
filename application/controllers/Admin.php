@@ -229,7 +229,7 @@ class Admin extends CI_Controller {
 		$type = "tanpa_where";
 		include("pagination_config.php");
 		//end Pagination::
-		$data['content'] = "admin/v_setup_kelas";
+		$data['content'] = "admin/kelas/v_setup_kelas";
 		$this->load->view('admin/index',$data);
 	}
 
@@ -971,7 +971,13 @@ class Admin extends CI_Controller {
 		$data['dataekstra'] = $this->m_admin->select_table_orderby('nama_ekstra ASC','ekstrakurikuler');
 		
 		
-		$data['content'] = "admin/v_setup_ekstra";
+		$data['content'] = "admin/ekstra/v_setup_ekstra";
+		$this->load->view('admin/index',$data);
+	}
+
+	public function tambah_ekstra()
+	{
+		$data['content'] = "admin/ekstra/v_tambah_ekstra";
 		$this->load->view('admin/index',$data);
 	}
 
@@ -982,7 +988,7 @@ class Admin extends CI_Controller {
 		if($this->form_validation->run()==FALSE)
 		{
 			$this->setmessage(validation_errors(),'warning'); 
-			redirect('admin/setup_ekstra/?m=setup&sm=ekstra_kurikuler');
+			redirect('admin/tambah_ekstra');
 		}
 		else
 		{
@@ -990,91 +996,37 @@ class Admin extends CI_Controller {
 				'nama_ekstra' => trim(strip_tags($this->input->post('nama_ekstra')))
 				);
 			$this->m_admin->insert_dataTo($data,'ekstrakurikuler');
-
-			$this->setmessage('Alhamdulillah yaa, Ekstra Kurikuler berhasil ditambahkan :)','success');
-
-			redirect('admin/setup_ekstra?m=setup&sm=ekstra_kurikuler');
+			$this->setmessage('Ekstra Kurikuler berhasil ditambahkan :)','success');
+			redirect('admin/setup_ekstra');
 		}
 
 	}
 
-	//-->> Multi Action <<--
-	public function aksi_ekstra()
-	{
-		$post = $this->input->post();
-
-		if(isset($post['multidelete'])){
-			$check = $post['check'];
-			$jml = count($check);
-			if(isset($check)){
-				
-				//menghapus data di database
-				$cols = "id_ekstra";
-				$this->m_admin->del_selected_data($post,'ekstrakurikuler',$cols);
-
-			$this->setmessage('Berhasil menghapus '.$jml.' data Ekstra Kurikuler.','success');
-
-			redirect('admin/setup_ekstra?m=setup&sm=ekstra_kurikuler');
-			}else{
-				$this->setmessage('Tidak ada data yang pilih!','warning');
-		
-				redirect('admin/setup_ekstra?m=setup&sm=ekstra_kurikuler');
-			}
-		}
-
-		if(isset($post['multiedit'])){
-			$check = $post['check'];
-			if(isset($check)){
-				
-				
-				$cols = "id_ekstra";
-			$data['select_ekstra'] = $this->m_admin->get_selected_data($post,'ekstrakurikuler',$cols);
-			
-			$id_admin = $this->session->userdata('id');
-			$where = array('id_admin' => $id_admin);
-			$data['user'] = $this->m_admin->select_dataWhere($where,'user_admin');
-			$data['page_title'] = "<h1>Edit Ekstra Kurikuler<small>melakukan perubahan Ekstra Kurikuler</small></h1>";
-			$data['tipe_form'] = "multi";
-			$data['content'] = "admin/v_edit_ekstrakurikuler";
-			$this->load->view('admin/index',$data);
-
-			}else{
-				$this->setmessage('Tidak ada data yang dipilih!','warning');
-		
-				redirect('admin/setup_ekstra?m=setup&sm=ekstra_kurikuler');
-			}
-		}
-	}
 
 	public function update_ekstra()
 	{
-		$this->form_validation->set_rules('nama_ekstra[]','Ekstra Kurikuler','required');
+		$this->form_validation->set_rules('nama_ekstra','Ekstra Kurikuler','required');
 		
 		if($this->form_validation->run()==FALSE)
 		{
 			$this->setmessage(validation_errors(),'warning');
-			redirect('admin/setup_ekstra/?m=setup&sm=ekstra_kurikuler');
+			redirect('admin/setup_ekstra');
 		}
 		else
 		{
 			$id_ekstra = $this->input->post('id_ekstra');
 			$nama_ekstra = $this->input->post('nama_ekstra');
-			
-			$jml = count($id_ekstra);
-
-			//-->> Perulangan <<--
-
-			foreach ($id_ekstra as $key => $value) {
-				
-				$data[$key]['id_ekstra'] = trim($id_ekstra[$key]);
-				$data[$key]['nama_ekstra'] = trim(strip_tags($nama_ekstra[$key]));				
-			}
-			$this->m_admin->update_batch('ekstrakurikuler',$data,'id_ekstra');
+			$post = [
+				'id_ekstra' 	=> $id_ekstra,
+				'nama_ekstra'	=> $nama_ekstra
+			];
+			// print('<pre>');print_r($post);exit();
+			$this->m_admin->update_extra($post);
 
 			//-->> Set Message <<--
-			$this->setmessage('Berhasil memperbarui '.$jml.' data Ekstra Kurikuler.','success');
+			$this->setmessage('Berhasil memperbarui  data Ekstra Kurikuler.','success');
 
-			redirect('admin/setup_ekstra/?m=setup&sm=ekstra_kurikuler');
+			redirect('admin/setup_ekstra');
 			
 		}
 	}
@@ -1082,15 +1034,15 @@ class Admin extends CI_Controller {
 	//-->> Singgle Action <<--
 	public function edit_ekstra()
 	{
-		$where = array('id_ekstra' => $this->uri->segment(3));
-		$data['select_ekstra'] = $this->m_admin->select_dataWhere($where,'ekstrakurikuler');
-
-		$id_admin = $this->session->userdata('id');
-		$where = array('id_admin' => $id_admin);
-		$data['user'] = $this->m_admin->select_dataWhere($where,'user_admin');
-		$data['page_title'] = "<h1>Edit Ekstra Kurikuler<small>melakukan perubahan data Ekstra Kurikuler</small></h1>";
-		$data['tipe_form'] = "multi";
-		$data['content'] = "admin/v_edit_ekstrakurikuler";
+		$id = $this->uri->segment(3);
+		// $where = array('id_ekstra' => $this->uri->segment(3));
+		// $data['select_ekstra'] = $this->m_admin->select_dataWhere($where,'ekstrakurikuler');
+		// $id_admin = $this->session->userdata('id');
+		// $where = array('id_admin' => $id_admin);
+		// $data['user'] = $this->m_admin->select_dataWhere($where,'user_admin');
+		$data['ekstra'] = $this->m_admin->get_detail_ekstra($id);
+		// print('<pre>');print_r($data);exit();
+		$data['content'] = "admin/ekstra/v_edit_ekstra";
 		$this->load->view('admin/index',$data);
 	}
 
@@ -1098,12 +1050,8 @@ class Admin extends CI_Controller {
 	{
 		$where = array('id_ekstra' => $this->uri->segment(3));
 		$this->m_admin->delete_dataTable($where,'ekstrakurikuler');
-
 		$this->setmessage('Berhasil menghapus mata pelajaran.','success');
-
 		redirect('admin/setup_ekstra?m=setup&sm=ekstra_kurikuler');
-
-
 	}
 
 	/*
@@ -1823,12 +1771,21 @@ class Admin extends CI_Controller {
 		$type = "ada_where";
 		include("pagination_config.php");
 		//end Pagination::
-		
-		$data['content'] = "admin/v_data_siswa";
+		// print('<pre>');print_r($data);exit();
+		$data['content'] = "admin/siswa/v_data_siswa";
 		$this->load->view('admin/index',$data);
 	}
 
 	public function tambah_siswa()
+	{
+		$data['datakelas'] = $this->m_admin->select_table_orderby('nama_kelas ASC','setup_kelas');
+		$data['tahunajaran'] = $this->m_admin->select_table_orderby('tahun ASC','setup_tahun');
+		$data['content'] = "admin/siswa/v_tambah_siswa";
+		$this->load->view('admin/index',$data);
+	}
+
+
+	public function proses_tambah_siswa()
 	{
 		$this->form_validation->set_rules('nama_siswa','Nama Siswa','required');
 		$this->form_validation->set_rules('nis','NIS','required');
@@ -1937,7 +1894,7 @@ class Admin extends CI_Controller {
 
 				$this->m_admin->insert_dataTo($data,'data_siswa');
 
-				$this->setmessage('Alhamdulillah yaa, Data Siswa berhasil ditambahkan :)','success');
+				$this->setmessage('Data Siswa berhasil ditambahkan :)','success');
 				redirect('admin/data_siswa');
 			}
 		}

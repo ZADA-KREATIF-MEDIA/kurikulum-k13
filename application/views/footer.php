@@ -1,8 +1,7 @@
-</div>
-    <!-- container-scroller -->
-  
-   <!-- partial:partials/_footer.html -->
-   <footer class="footer">
+        </div>
+        <!-- container-scroller -->
+        <!-- partial:partials/_footer.html -->
+          <footer class="footer">
             <div class="container-fluid clearfix">
               <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
               <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com</span>
@@ -11,7 +10,7 @@
           <!-- partial -->
         </div>
         <!-- main-panel ends -->
-      </div><!-- plugins:js -->
+     <!-- plugins:js -->
     <script src="<?= base_url() ?>assets/vendors/js/vendor.bundle.base.js"></script>
     <script src="<?= base_url() ?>assets/vendors/js/vendor.bundle.addons.js"></script>
     <!-- endinject -->
@@ -20,5 +19,17 @@
     <script src="<?= base_url() ?>assets/js/shared/misc.js"></script>
     <!-- endinject -->
     <script src="<?= base_url() ?>assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
+    <?php if($this->uri->segment(2)== "tambah_siswa"):?>
+    <script src="<?= base_url() ?>assets/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <?php endif;?>
+    <script>
+      <?php if($this->uri->segment(2)== "tambah_siswa"):?>
+        $( function() {
+          $( ".datepicker" ).datepicker({
+            dateFormat: 'dd-mm-yy'
+          });
+        } );
+      <?php endif;?>
+    </script>
   </body>
 </html>

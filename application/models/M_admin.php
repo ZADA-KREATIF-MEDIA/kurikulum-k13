@@ -614,6 +614,27 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 	return $this->db->get();
 }
 
+/*----------- Ekstrakulikuler -----------*/
+public function update_extra($post)
+{
+	$this->db->select()
+		->from('ekstrakurikuler')
+		->where("id_ekstra", $post['id_ekstra']);
+	$query = $this->db->set($post)->get_compiled_update();
+	$this->db->query($query);
+	return true;	
+}
+
+public function get_detail_ekstra($id)
+{
+	$this->db->select()
+		->from('ekstrakurikuler')
+		->where("id_ekstra", $id);
+	$query = $this->db->get_compiled_select();
+	$data  = $this->db->query($query)->row_array();
+	return $data;
+}
+
 //===============================================================
 /*
 

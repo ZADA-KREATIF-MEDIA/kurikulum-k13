@@ -89,11 +89,11 @@
                             <a class="nav-link" href="<?= base_url() ?>admin_editnilai/edit_sikap?m=edit_nilai&sm=edit_sikap">Kompentensi Sikap</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url() ?>/admin_editnilai/edit_nilai_peng_ketr?m=edit_nilai&sm=pengetahuan_ketrampilan"">Kompentensi Pengetahuan <br>Dan
+                            <a class="nav-link" href="<?= base_url() ?>/admin_editnilai/edit_nilai_peng_ketr?m=edit_nilai&sm=pengetahuan_ketrampilan">Kompentensi Pengetahuan <br>Dan
                                 Ketrampilan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url() ?>/">Ekstrakurikuler</a>
+                            <a class="nav-link" href="<?= base_url() ?>/admin/setup_ekstra">Ekstrakurikuler</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-danger" href="<?= base_url() ?>/#">Tinggi dan Berat Badan</a>
@@ -102,7 +102,7 @@
                             <a class="nav-link text-danger" href="<?= base_url() ?>/#">Kondisi Fisik</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url() ?>/admin_editnilai/edit_data_kehadiran?m=edit_nilai&sm=data_kehadiran"">Ketidakhadiran</a>
+                            <a class="nav-link" href="<?= base_url() ?>/admin_editnilai/edit_data_kehadiran?m=edit_nilai&sm=data_kehadiran">Ketidakhadiran</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-danger" href="<?= base_url() ?>/#">Saran-saran</a>
@@ -120,12 +120,11 @@
                 <div class="collapse" id="rapot">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link text-warning" href="<?= base_url() ?>cetak/legger_semua?m=pelaporan&sm=legger_semua"">Legger Rapot</a>
+                            <a class="nav-link text-warning" href="<?= base_url() ?>cetak/legger_semua?m=pelaporan&sm=legger_semua">Legger Rapot</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url() ?>cetak/cetak_rapor?m=pelaporan&sm=cetak_rapor">Cetak Rapot</a>
                         </li>
-                       
                     </ul>
                 </div>
             </li>
