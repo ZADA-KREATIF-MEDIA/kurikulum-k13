@@ -254,7 +254,7 @@ class Admin_editnilai extends CI_Controller {
 		}
 		else //: Menampilkan pesan jika data kosong...
 		{
-			$this->setmessage('Maaf, input deskripsi nilai tidak dapat dilakukan, karena data nilai masih kosong. Silahkan isi data nilai terlebih dahulu!');
+			$this->setmessage("Maaf, input deskripsi nilai tidak dapat dilakukan, karena data nilai masih kosong. Silahkan isi data nilai terlebih dahulu!");
 			redirect('admin_editnilai/edit_deskripsi_nilai?m=edit_nilai&sm=deskripsi_nilai');
 		}
 
@@ -662,7 +662,7 @@ class Admin_editnilai extends CI_Controller {
 		$data['page_title'] = '<h1>Edit Prestasi Siswa<small>Sort berdasarkan kelas, semester dan tahun ajaran</small></h1>';
 					
 		
-		$data['content'] = "admin/v_edit_prestasi";
+		$data['content'] = "admin/prestasi/v_edit_prestasi";
 		
 		$this->load->view('admin/index',$data);
 	}
@@ -726,7 +726,7 @@ public function form_edit_prestasi()
 	
 		$data['prestasi_siswa'] = $this->m_admin->get_prestasi_siswa($idkelas,$idtahun,$idsemester);
 		
-		$data['content'] = "admin/v_prestasi_list_siswa";
+		$data['content'] = "admin/prestasi/v_prestasi_list_siswa";
 		
 		$this->load->view('admin/index',$data);
 	}
@@ -794,7 +794,7 @@ public function form_edit_prestasi()
 		$data['prestasi_siswa'] = $this->m_admin->lihat_prestasi_persiswa($where);
 		$data['page_title'] = '<h1>Update Prestasi Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 		$data['type_form'] = "update";
-		$data['content'] = "admin/v_form_input_prestasi";
+		$data['content'] = "admin/prestasi/v_form_input_prestasi";
 		
 			
 

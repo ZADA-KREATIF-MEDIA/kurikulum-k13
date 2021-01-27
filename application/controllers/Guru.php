@@ -3,26 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Guru extends CI_Controller {
 
-	/*
-	| -----------------------------------------------------------------------
-	| SINO 2018 - COPYRIGHTS - WATULINTANG.COM
-	| DAFTAR ISI CLASS Guru
-	| -----------------------------------------------------------------------
-	| 1) DASHBOARD GURU
-	| 2) SET PROFILE
-	| 3) INPUT NILAI
-	| 4) INPUT DESKRIPSI NILAI
-	| 5) INPUT NILAI SIKAP (wali kelas)
-	| 6) INPUT NILAI EKSTRA (wali kelas)
-	| 7) INPUT PRESTASI SISWA (wali kelas)
-	| 8) INPUT KEHADIRAN (wali kelas)
-	| 9) INPUT CATATAN WALI KELAS (wali kelas)
-	| 10) PELAPORAN - NILAI MAPEL YANG DIAMPU
-	| 11) LEGGER SEMUA MAPEL (wali kelas))
-	| 12) LEGGER SEMUA SISWA DIKELAS (wali kelas)
-
-	*/
-
 	function __construct(){
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
@@ -395,7 +375,7 @@ class Guru extends CI_Controller {
 		//Semester yg aktif;
 		$data['semester'] = $setup_semester->id_semester;
 
-		$data['content'] = "guru/v_input_nilai";
+		$data['content'] = "guru/penilaian/v_input_nilai";
 		$this->load->view('guru/index',$data);
 	}
 
@@ -460,7 +440,7 @@ class Guru extends CI_Controller {
 		$where = array('id_guru' => $id_guru);
 		$data['user'] = $this->m_guru->select_dataWhere($where,'data_guru');
 
-		$data['content'] = "guru/v_input_nilai_siswa";
+		$data['content'] = "guru/penilaian/v_input_nilai_siswa";
 		$this->load->view('guru/index',$data);
 	}
 
