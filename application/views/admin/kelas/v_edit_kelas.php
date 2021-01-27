@@ -8,17 +8,18 @@
     </div>
     <div class="box">
 		<div class="box-header with-border">
-			<h3 class="box-title">Tambah Kelas</h3>
+			<h3 class="box-title">Update Kelas</h3>
 		</div>
         <hr>
 		<div class="box-body">
-			<form action="<?php echo base_url('admin/create_kelas');?>" method="post" class="form-horizontal">
+			<form action="<?php echo base_url('admin/update_kelas');?>" method="post" class="form-horizontal">
 				<div class="form-group">
 					<label for="nama">Nama Kelas</label>
-					<input type="text" class="form-control" name="nama_kelas"/>
+					<input type="text" class="form-control" name="nama_kelas" value="<?= $kelas['nama_kelas'] ?>"/>
 				</div>
 				<div class="form-group">
-                    <button type="submit" name="submit" value="Tambah" class="btn btn-primary">Tambah</button>
+					<input type="hidden" name="id" value="<?= $kelas['id_kelas']?>">
+                    <button type="submit" name="submit" class="btn btn-primary">Update</button>
                     <button type="reset" value="Reset"  class="btn btn-danger">Reset</button>
 				</div>
 			</form>

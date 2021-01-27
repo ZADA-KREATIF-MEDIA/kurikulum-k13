@@ -615,83 +615,67 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 }
 
 /*----------- Ekstrakulikuler -----------*/
-public function update_extra($post)
-{
-	$this->db->select()
-		->from('ekstrakurikuler')
-		->where("id_ekstra", $post['id_ekstra']);
-	$query = $this->db->set($post)->get_compiled_update();
-	$this->db->query($query);
-	return true;	
-}
+	public function update_extra($post)
+	{
+		$this->db->select()
+			->from('ekstrakurikuler')
+			->where("id_ekstra", $post['id_ekstra']);
+		$query = $this->db->set($post)->get_compiled_update();
+		$this->db->query($query);
+		return true;	
+	}
 
-public function get_detail_ekstra($id)
-{
-	$this->db->select()
-		->from('ekstrakurikuler')
-		->where("id_ekstra", $id);
-	$query = $this->db->get_compiled_select();
-	$data  = $this->db->query($query)->row_array();
-	return $data;
-}
+	public function get_detail_ekstra($id)
+	{
+		$this->db->select()
+			->from('ekstrakurikuler')
+			->where("id_ekstra", $id);
+		$query = $this->db->get_compiled_select();
+		$data  = $this->db->query($query)->row_array();
+		return $data;
+	}
 
-//===============================================================
-/*
+/*---------- Kelas ----------*/
+	public function get_detail_kelas($id)
+	{
+		$this->db->select()
+			->from('setup_kelas')
+			->where("id_kelas", $id);
+		$query = $this->db->get_compiled_select();
+		$data  = $this->db->query($query)->row_array();
+		return $data;
+	}
 
-Reference:
-* Select:
-	$query = $this->db->get('mytable');  // Produces: SELECT * FROM mytable
-	-----
-	$query = $this->db->get('mytable', 10, 20);
+	public function update_kelas($post)
+	{
+		$this->db->select()
+			->from('setup_kelas')
+			->where("id_kelas", $post['id_kelas']);
+		$query = $this->db->set($post)->get_compiled_update();
+		$this->db->query($query);
+		return true;	
+	}
+/*--------- Tahun Ajaran ----------*/
+	public function status_tahun_all_off()
+	{
+		$post = [
+			'status_aktif' => 0
+		];
+		$this->db->select()
+			->from('setup_tahun');
+		$query = $this->db->set($post)->get_compiled_update();
+		// print('<pre>');print_r($query);exit();
+		$this->db->query($query);
+		return true;	
+	}
 
-	// Executes: SELECT * FROM mytable LIMIT 20, 10
-	// (in MySQL. Other databases have slightly different syntax)
-	-----
-	$sql = $this->db->get_compiled_select('mytable'); //not run query just string
-	echo $sql;
-	-----
-	$this->db->select('title, content, date');
-	$this->db->from('mytable');
-	$query = $this->db->get();  // Produces: SELECT title, content, date FROM mytable
-
-* get where
-	$query = $this->db->get_where('mytable', array('id' => $id), $limit, $offset);
-	----
-	$this->db->where('name !=', $name);
-	$this->db->or_where('id >', $id);  // Produces: WHERE name != 'Joe' OR id > 50
-	----
-
-	$data = array('name' => $name, 'email' => $email, 'url' => $url);
-
-	$where = "author_id = 1 AND status = 'active'";
-
-	$str = $this->db->update_string('table_name', $data, $where);
-
-* like
-	$this->db->like('title', 'match');
-	// Produces: WHERE `title` LIKE '%match%' ESCAPE '!'
-
-* join
-	$this->db->select('*');
-	$this->db->from('blogs');
-	$this->db->join('comments', 'comments.id = blogs.id');
-	$query = $this->db->get();
-
-	// Produces:
-	// SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
-	---
-	specific:
-	$this->db->join('comments', 'comments.id = blogs.id', 'left');
-
-* Replace
-	$data = array(
-        'title' => 'My title',
-        'name'  => 'My Name',
-        'date'  => 'My date'
-	);
-
-	$this->db->replace('table', $data);
-
-*/
-
+	public function update_tahun($post)
+	{
+		$this->db->select()
+			->from('setup_tahun')
+			->where("id_tahun", $post['id_tahun']);
+		$query = $this->db->set($post)->get_compiled_update();
+		$this->db->query($query);
+		return true;
+	}
 }

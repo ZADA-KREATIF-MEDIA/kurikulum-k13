@@ -203,7 +203,6 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $where = array('id_admin' => $id_admin);
         $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Setup Kelas<small>mengelola pengaturan kelas</small></h1>";
         $data['datakelas'] = $this->m_admin->select_table_orderby('nama_kelas ASC', 'setup_kelas');
         //Pgination Config::
         $siteurl = site_url('admin/setup_kelas/');
@@ -218,118 +217,54 @@ class Admin extends CI_Controller
         //end Pagination::
         $data['content'] = "admin/kelas/v_setup_kelas";
         $this->load->view('admin/index', $data);
-    }
+	}
+	
+	public function tambah_kelas()
+	{
+		$data['content'] = "admin/kelas/v_tambah_kelas";
+        $this->load->view('admin/index', $data);
+	}
 
     public function create_kelas()
     {
         $this->form_validation->set_rules('nama_kelas', 'Nama Kelas', 'required|max_length[10]');
-        $this->form_validation->set_rules('kategori_kls', 'Kategori Kelas', 'required');
 
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Gagal</h4>');
-
             $this->session->set_flashdata('validation_errors', validation_errors());
-
             $this->session->set_flashdata('error_close', '</div>');
-            redirect('admin/setup_kelas/?m=setup&sm=kelas');
+            redirect('admin/tambah_kelas');
         } else {
             $data = array(
                 'nama_kelas' => $this->input->post('nama_kelas'),
-                'kategori_kls' => $this->input->post('kategori_kls'),
             );
             $this->m_admin->insert_dataTo($data, 'setup_kelas');
-
-            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses!</h4> Alhamdulillah yaa, Kelas berhasil ditambahkan :) </div>');
-
-            redirect('admin/setup_kelas/?m=setup&sm=kelas');
-        }
-
-    }
-
-    //-->> Multi Action <<--
-    public function aksi_kelas()
-    {
-        $post = $this->input->post();
-
-        if (isset($post['multidelete'])) {
-            $check = $post['check'];
-            $jml = count($check);
-            if (isset($check)) {
-
-                //menghapus data di database
-                $cols = "id_kelas";
-                $this->m_admin->del_selected_data($post, 'setup_kelas', $cols);
-
-                $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="fa fa-check-circle"></i> Sukses!</h4> Berhasil menghapus ' . $jml . ' data kelas.</div>');
-
-                redirect('admin/setup_kelas?m=setup&sm=kelas');
-            } else {
-                $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Ups, Terjadi kesalahan!</h4> Tidak ada data yang dipilih!');
-
-                $this->session->set_flashdata('error_close', '</div>');
-
-                redirect('admin/setup_kelas?m=setup&sm=kelas');
-            }
-        }
-
-        if (isset($post['multiedit'])) {
-            $check = $post['check'];
-            if (isset($check)) {
-
-                $cols = "id_kelas";
-                $data['select_kelas'] = $this->m_admin->get_selected_data($post, 'setup_kelas', $cols);
-
-                $id_admin = $this->session->userdata('id');
-                $where = array('id_admin' => $id_admin);
-                $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-                $data['page_title'] = "<h1>Edit Kelas<small>melakukan perubahan data kelas</small></h1>";
-                $data['tipe_form'] = "multi";
-                $data['content'] = "admin/v_edit_kelas";
-                $this->load->view('admin/index', $data);
-
-            } else {
-                $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Ups, Terjadi kesalahan!</h4> Tidak ada data yang dipilih!');
-
-                $this->session->set_flashdata('error_close', '</div>');
-
-                redirect('admin/setup_kelas?m=setup&sm=kelas');
-            }
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses!</h4> Kelas berhasil ditambahkan :) </div>');
+            redirect('admin/setup_kelas');
         }
     }
 
     public function update_kelas()
     {
-        $this->form_validation->set_rules('nama_kelas[]', 'Nama Kelas', 'required|max_length[10]');
-        $this->form_validation->set_rules('kategori_kls[]', 'Kategori Kelas', 'required');
-
+		$id_kelas = $this->input->post('id');
+        $this->form_validation->set_rules('nama_kelas', 'Nama Kelas', 'required|max_length[10]');
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Gagal</h4>');
 
             $this->session->set_flashdata('validation_errors', validation_errors());
 
             $this->session->set_flashdata('error_close', '</div>');
-            redirect('admin/setup_kelas/?m=setup&sm=kelas');
+            redirect('admin/edit_kelas/'.$id_kelas);
         } else {
-            $id_kelas = $this->input->post('id_kelas');
-            $nama_kelas = $this->input->post('nama_kelas');
-            $kategori_kls = $this->input->post('kategori_kls');
-            $jml = count($id_kelas);
-
-            //-->> Perulangan <<--
-
-            foreach ($id_kelas as $key => $value) {
-                $data = array(
-                    'nama_kelas' => $nama_kelas[$key],
-                    'kategori_kls' => $kategori_kls[$key],
-                );
-                $where = array('id_kelas' => $id_kelas[$key]);
-                $this->m_admin->update_dataTable($where, $data, 'setup_kelas');
-            }
-
+			$nama_kelas = $this->input->post('nama_kelas');
+			$post = [
+				'id_kelas' => $id_kelas,
+				'nama_kelas' => $nama_kelas
+			];
+			$this->m_admin->update_kelas($post);
             //-->> Set Message <<--
-            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="fa fa-check-circle"></i> Sukses!</h4> Berhasil memperbarui ' . $jml . ' data kelas.</div>');
-
-            redirect('admin/setup_kelas/?m=setup&sm=kelas');
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="fa fa-check-circle"></i> Sukses!</h4> Berhasil memperbarui data kelas.</div>');
+            redirect('admin/setup_kelas');
 
         }
     }
@@ -337,15 +272,10 @@ class Admin extends CI_Controller
     //-->> Singgle Action <<--
     public function edit_kelas()
     {
-        $where = array('id_kelas' => $this->uri->segment(3));
-        $data['select_kelas'] = $this->m_admin->select_dataWhere($where, 'setup_kelas');
-
-        $id_admin = $this->session->userdata('id');
-        $where = array('id_admin' => $id_admin);
-        $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Edit Kelas<small>melakukan perubahan data kelas</small></h1>";
-        $data['tipe_form'] = "multi";
-        $data['content'] = "admin/v_edit_kelas";
+		$id = $this->uri->segment(3);
+		$data['kelas'] = $this->m_admin->get_detail_kelas($id);
+		
+        $data['content'] = "admin/kelas/v_edit_kelas";
         $this->load->view('admin/index', $data);
     }
 
@@ -409,7 +339,7 @@ class Admin extends CI_Controller
             );
             $this->m_admin->insert_dataTo($data, 'setup_pelajaran');
 
-            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses!</h4> Alhamdulillah yaa, Mata Pelajaran berhasil ditambahkan :) </div>');
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses!</h4> Mata Pelajaran berhasil ditambahkan :) </div>');
 
             redirect('admin/setup_pelajaran?m=setup&sm=pelajaran');
         }
@@ -551,94 +481,29 @@ class Admin extends CI_Controller
         $data['thn_pelajaran'] = $this->m_admin->select_table_orderby('id_tahun ASC', 'setup_tahun');
         $data['semester'] = $this->m_admin->select_dataWhere('status_semester = 1', 'setup_semester');
 
-        $data['content'] = "admin/v_setup_tahun_pelajaran";
+        $data['content'] = "admin/tahun_ajaran/v_setup_tahun_pelajaran";
         $this->load->view('admin/index', $data);
     }
 
     public function create_tahun_pelajaran()
     {
         $this->form_validation->set_rules('tahun', 'Tahun Pelajaran', 'required');
-
         if ($this->form_validation->run() == false) {
             $this->setmessage(validation_errors(), 'warning');
-
-            redirect('admin/setup_tahun_pelajaran/?m=setup&sm=tahun_pelajaran');
+            redirect('admin/setup_tahun_pelajaran');
         } else {
             $data = array(
                 'tahun' => $this->input->post('tahun'),
             );
             $this->m_admin->insert_dataTo($data, 'setup_tahun');
 
-            $this->setmessage('Alhamdulillah yaa, Tahun Pelajaran berhasil ditambahkan :)', 'success');
+            $this->setmessage('Tahun Pelajaran berhasil ditambahkan :)', 'success');
 
-            redirect('admin/setup_tahun_pelajaran?m=setup&sm=tahun_pelajaran');
+            redirect('admin/setup_tahun_pelajaran');
         }
 
     }
 
-    //-->> Multi Action <<--
-    public function aksi_tahun()
-    {
-        $post = $this->input->post();
-
-        if (isset($post['multidelete'])) {
-            $check = $post['check'];
-            $jml = count($check);
-            if (isset($check)) {
-
-                //menghapus data di database
-                $cols = "id_tahun";
-                $this->m_admin->del_selected_data($post, 'setup_tahun', $cols);
-
-                $this->setmessage('Tahun Pelajaran berhasil dihapus..', 'success');
-
-                redirect('admin/setup_tahun_pelajaran?m=setup&sm=tahun_pelajaran');
-            } else {
-                $this->setmessage('Tidak ada data yang dipilih!', 'warning');
-
-                redirect('admin/setup_tahun_pelajaran?m=setup&sm=tahun_pelajaran');
-            }
-        }
-
-        if (isset($post['multiedit'])) {
-            $check = $post['check'];
-            if (isset($check)) {
-
-                $cols = "id_tahun";
-                $data['select_tahun'] = $this->m_admin->get_selected_data($post, 'setup_tahun', $cols);
-
-                $id_admin = $this->session->userdata('id');
-                $where = array('id_admin' => $id_admin);
-                $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-                $data['page_title'] = "<h1>Edit Tahun Pelajaran<small>melakukan perubahan Tahun Pelajaran</small></h1>";
-                $data['tipe_form'] = "multi";
-                $data['content'] = "admin/v_edit_tahun_pelajaran";
-                $this->load->view('admin/index', $data);
-
-            } else {
-                $this->setmessage('Tidak ada data yang dipilih!', 'warning');
-
-                redirect('admin/setup_tahun_pelajaran?m=setup&sm=tahun_pelajaran');
-            }
-        }
-
-        if (isset($post['onkan'])) {
-            $check = $post['check'];
-            if (isset($check)) {
-
-                $aksi_on = $this->m_admin->set_tahun_on($post);
-
-                $this->setmessage('Berhasil melakukan perubahan Tahun Pelajaran aktif!', 'success');
-
-                redirect('admin/setup_tahun_pelajaran?m=setup&sm=tahun_pelajaran');
-
-            } else {
-                $this->setmessage('Tidak ada data yang dipilih!', 'warning');
-
-                redirect('admin/setup_tahun_pelajaran?m=setup&sm=tahun_pelajaran');
-            }
-        }
-    }
 
     public function update_tahun()
     {
@@ -646,45 +511,29 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $this->setmessage(validation_errors(), 'warning');
-            redirect('admin/setup_tahun_pelajaran/?m=setup&sm=tahun_pelajaran');
+            redirect('admin/setup_tahun_pelajaran');
         } else {
-            $id_tahun = $this->input->post('id_tahun');
-            $tahun = $this->input->post('tahun');
-
-            $jml = count($id_tahun);
-
-            //-->> Perulangan <<--
-
-            foreach ($id_tahun as $key => $value) {
-                $data = array(
-                    'tahun' => $tahun[$key],
-                );
-                $where = array('id_tahun' => $id_tahun[$key]);
-                $this->m_admin->update_dataTable($where, $data, 'setup_tahun');
-            }
-
-            //-->> Set Message <<--
-            $this->setmessage('Berhasil memperbarui ' . $jml . ' data Tahun Pelajaran.', 'success');
+            $id_tahun 	= $this->input->post('id');
+            $tahun 		= $this->input->post('tahun');
+			$status 	= $this->input->post('status');
+			if($status == 1){
+				// echo "here";exit();
+				$this->m_admin->status_tahun_all_off();
+			}
+			$post = [
+				'id_tahun' 	=> $id_tahun,
+				'tahun'		=> $tahun,
+				'status_aktif'	=> $status
+			];
+			
+			$this->m_admin->update_tahun($post);
+            $this->setmessage('Berhasil memperbarui data Tahun Pelajaran.', 'success');
 
             redirect('admin/setup_tahun_pelajaran/?m=setup&sm=tahun_pelajaran');
 
         }
     }
 
-    //-->> Singgle Action <<--
-    public function edit_tahun()
-    {
-        $where = array('id_tahun' => $this->uri->segment(3));
-        $data['select_tahun'] = $this->m_admin->select_dataWhere($where, 'setup_tahun');
-
-        $id_admin = $this->session->userdata('id');
-        $where = array('id_admin' => $id_admin);
-        $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Edit Tahun Pelajaran<small>melakukan perubahan Tahun Pelajaran</small></h1>";
-        $data['tipe_form'] = "multi";
-        $data['content'] = "admin/v_edit_tahun_pelajaran";
-        $this->load->view('admin/index', $data);
-    }
 
     public function drop_tahun()
     {
@@ -957,7 +806,7 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $this->setmessage(validation_errors(), 'warning');
-            redirect('admin/setup_ekstra');
+            redirect('admin/tambah_ekstra');
         } else {
             $id_ekstra = $this->input->post('id_ekstra');
             $nama_ekstra = $this->input->post('nama_ekstra');
@@ -1430,7 +1279,7 @@ class Admin extends CI_Controller
             $this->m_admin->insert_dataTo($data, 'data_guru');
 
             //-->> Set Message <<--
-            $this->setmessage('Alhamdulillah yaa, Data Guru berhasil ditambahkan :)', 'success');
+            $this->setmessage('Data Guru berhasil ditambahkan :)', 'success');
 
             redirect('admin/data_guru');
         }
@@ -1823,7 +1672,7 @@ class Admin extends CI_Controller
             $this->m_admin->insert_dataTo($data, 'data_siswa');
 
             //-->> Set Message <<--
-            $this->setmessage('Alhamdulillah yaa, Data Siswa berhasil ditambahkan :)', 'success');
+            $this->setmessage('Data Siswa berhasil ditambahkan :)', 'success');
 
             redirect('admin/data_siswa');
         }
