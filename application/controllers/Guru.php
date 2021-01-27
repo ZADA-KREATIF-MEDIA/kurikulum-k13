@@ -580,7 +580,7 @@ class Guru extends CI_Controller {
 		//Semester yg aktif;
 		$data['semester'] = $setup_semester->id_semester;
 
-		$data['content'] = "guru/v_input_nilai";
+		$data['content'] = "guru/penilaian/v_input_nilai";
 		$this->load->view('guru/index',$data);
 	}
 
@@ -632,7 +632,7 @@ public function aksi_input_deskripsi()
 		$where = array('id_guru' => $id_guru);
 		$data['user'] = $this->m_guru->select_dataWhere($where,'data_guru');
 
-		$data['content'] = "guru/v_input_nilai_deskripsi";
+		$data['content'] = "guru/penilaian/v_input_nilai_deskripsi";
 		$this->load->view('guru/index',$data);
 	}
 

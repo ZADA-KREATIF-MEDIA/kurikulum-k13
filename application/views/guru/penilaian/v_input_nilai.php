@@ -15,7 +15,7 @@ $id_guru = $this->session->userdata('id');
     <h4>Data mata pelajaran di ampu</h4>
 </div>
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-md-12">
         <?php echo $this->session->flashdata('notif');?>
     </div>
 </div>
