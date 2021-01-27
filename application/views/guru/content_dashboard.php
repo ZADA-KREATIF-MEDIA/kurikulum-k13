@@ -1,7 +1,7 @@
 <div class="col-md-9">
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#activity" data-toggle="tab"><span class="visible-lg visible-md visible-sm">Pengumuman</span><span class="visible-xs text-center"><i class="fa fa-globe"></i><br><small style="font-size: 8pt;">Pengumuman</small></span></a> </li>
+                  <li class="active"><a href="#activity" data-toggle="tab"><span class="visible-lg visible-md visible-sm">Pengumduman</span><span class="visible-xs text-center"><i class="fa fa-globe"></i><br><small style="font-size: 8pt;">Pengumuman</small></span></a> </li>
                   
                   <li><a href="#profil" data-toggle="tab"><span class="visible-lg visible-md visible-sm">Profil</span><span class="visible-xs text-center"><i class="fa fa-user"></i><br><small style="font-size: 8pt;">Profil</small></span></a></li>
                 </ul>
