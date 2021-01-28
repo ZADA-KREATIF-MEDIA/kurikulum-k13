@@ -613,7 +613,16 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 	$this->db->order_by('siswa.nama_siswa ASC');
 	return $this->db->get();
 }
-
+/*----------- Siswa ----------*/
+	public function detail_siswa($id)
+	{
+		$this->db->select()
+			->from('data_siswa')
+			->where('id_siswa',$id);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+	}
 /*----------- Ekstrakulikuler -----------*/
 	public function update_extra($post)
 	{
@@ -636,6 +645,16 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 	}
 
 /*---------- Kelas ----------*/
+	public function get_kelas()
+	{
+		$this->db->select()
+			->from('setup_kelas')
+			->order_by('nama_kelas');
+		$query 	= $this->db->get_compiled_select();
+		$data 	= $this->db->query($query)->result_array();
+		return $data;
+
+	}
 	public function get_detail_kelas($id)
 	{
 		$this->db->select()
@@ -656,6 +675,15 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 		return true;	
 	}
 /*--------- Tahun Ajaran ----------*/
+	public function m_get_aktif_tahun_ajaran()
+	{
+		$this->db->select()
+			->from('setup_tahun')
+			->where("status_aktif",1);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->result_array();
+		return $data;
+	}
 	public function status_tahun_all_off()
 	{
 		$post = [

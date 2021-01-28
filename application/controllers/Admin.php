@@ -1521,8 +1521,8 @@ class Admin extends CI_Controller
 
     public function tambah_siswa()
     {
-        $data['datakelas'] = $this->m_admin->select_table_orderby('nama_kelas ASC', 'setup_kelas');
-        $data['tahunajaran'] = $this->m_admin->select_table_orderby('tahun ASC', 'setup_tahun');
+        $data['kelas'] = $this->m_admin->get_kelas();
+        $data['tahunajaran'] = $this->m_admin->m_get_aktif_tahun_ajaran();
         $data['content'] = "admin/siswa/v_tambah_siswa";
         $this->load->view('admin/index', $data);
     }
@@ -1530,8 +1530,8 @@ class Admin extends CI_Controller
     public function proses_tambah_siswa()
     {
         $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
-        $this->form_validation->set_rules('nis', 'NIS', 'required');
-        $this->form_validation->set_rules('nisn', 'NISN', 'required|numeric');
+        $this->form_validation->set_rules('nis', 'NIS', 'required|is_unique[data_siswa.nis]');
+        $this->form_validation->set_rules('nisn', 'NISN', 'required|numeric|is_unique[data_siswa.nis]');
         $this->form_validation->set_rules('tempat_lahir', 'Tempat Lahir', 'required');
         $this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'required');
         $this->form_validation->set_rules('kelamin', 'Kelamin', 'required');
@@ -1558,11 +1558,11 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('username', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('repassword', 'Konfirmasi Password', 'required|matches[password]');
-        $this->form_validation->set_rules('status', 'Status', 'required');
+    
 
         //<!> Cek nis siswa <<--------
 
-        $cek_nis = $this->m_admin->select_dataWhere('nis=' . $this->input->post('nis') . '', 'data_siswa')->num_rows();
+        // $cek_nis = $this->m_admin->select_dataWhere('nis=' . $this->input->post('nis') . '', 'data_siswa')->num_rows();
 
         //<!> Cek File upload <<---------
 
@@ -1575,12 +1575,14 @@ class Admin extends CI_Controller
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
 
-            if ($this->form_validation->run() == false && !$this->upload->do_upload('userfile') && $cek_nis > 0) {
+            if ($this->form_validation->run() == false && !$this->upload->do_upload('userfile')) {
                 $this->setmessage(validation_errors() . $this->upload->display_errors() . '<br>Ditemukan NIS yang sama dalam database', 'warning');
-                $this->data_siswa();
-            } elseif ($this->form_validation->run() == false or !$this->upload->do_upload('userfile') or $cek_nis > 0) {
+                // $this->data_siswa();
+                redirect('/admin/tambah_siswa');
+            } elseif ($this->form_validation->run() == false or !$this->upload->do_upload('userfile')) {
                 $this->setmessage(validation_errors() . $this->upload->display_errors() . '<br>Ditemukan NIS yang sama dalam database', 'warning');
-                $this->data_siswa();
+                // $this->data_siswa();
+                redirect('/admin/tambah_siswa');
             } else {
                 $foto = $this->upload->data();
                 //Compress Image
@@ -1625,17 +1627,18 @@ class Admin extends CI_Controller
                     'username' => trim(htmlentities($post['username'])),
                     'password' => trim(md5(htmlentities($post['password']))),
                     'foto_siswa' => $foto['file_name'],
-                    'status' => trim($post['status']),
+                    'status' => 1,
                 );
-
+                
                 $this->m_admin->insert_dataTo($data, 'data_siswa');
 
                 $this->setmessage('Data Siswa berhasil ditambahkan :)', 'success');
                 redirect('admin/data_siswa');
             }
-        } elseif ($this->form_validation->run() == false or $cek_nis > 0) {
+        } elseif ($this->form_validation->run() == false) {
             $this->setmessage(validation_errors() . '<br>Ditemukan NIS yang sama dalam database', 'warning');
-            $this->data_siswa();
+            // $this->data_siswa();
+            redirect('/admin/tambah_siswa');
         } else {
             $post = $this->input->post();
             $data = array(
@@ -1651,8 +1654,8 @@ class Admin extends CI_Controller
                 'alamat_siswa' => trim(ucwords(htmlentities($post['alamat_siswa']))),
                 'telpon_siswa' => trim(htmlentities($post['telpon_siswa'])),
                 'asal_sekolah' => trim(htmlentities($post['asal_sekolah'])),
-                'kelas' => trim(htmlentities($post['id_kelas'])),
-                'diterima_tanggal' => trim(htmlentities($post['diterima_tanggal'])),
+                'kelas' => trim(htmlentities($post['kelas'])),
+                'diterima_tanggal' => trim(htmlentities($post['diterima_tgl'])),
                 'nama_ayah' => trim(htmlentities($post['nama_ayah'])),
                 'nama_ibu' => trim(htmlentities($post['nama_ibu'])),
                 'alamat_ortu' => trim(htmlentities($post['alamat_ortu'])),
@@ -1666,9 +1669,9 @@ class Admin extends CI_Controller
                 'tahun_ajaran' => trim(htmlentities($post['tahun_ajaran'])),
                 'username' => trim(htmlentities($post['username'])),
                 'password' => trim(md5(htmlentities($post['password']))),
-                'status' => trim($post['status']),
+                'status' => 1,
             );
-
+            // print('<pre>');print_r($data);exit();
             $this->m_admin->insert_dataTo($data, 'data_siswa');
 
             //-->> Set Message <<--
@@ -1768,6 +1771,17 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
     }
 
+    public function edit_siswa()
+    {
+        $data['kelas'] = $this->m_admin->get_kelas();
+        $data['tahunajaran'] = $this->m_admin->m_get_aktif_tahun_ajaran();
+        $id = $this->uri->segment(3);
+        $data['siswa'] = $this->m_admin->detail_siswa($id);
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/siswa/v_edit_siswa";
+        $this->load->view('admin/index', $data);
+    }
+
     public function update_siswa()
     {
         $post = $this->input->post();
@@ -1799,7 +1813,7 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('kelamin', 'Kelamin', 'required');
         $this->form_validation->set_rules('username', 'Username', 'required');
 
-        $this->form_validation->set_rules('status', 'Status', 'required');
+     
 
         //<!> Cek File upload <<---------
 
@@ -1814,10 +1828,10 @@ class Admin extends CI_Controller
 
             if ($this->form_validation->run() == false && !$this->upload->do_upload('userfile')) {
                 $this->setmessage(validation_errors() . $this->upload->display_errors(), 'warning');
-                redirect('admin/edit_siswa/' . $post['id_siswa'] . '/?m=data_induk&sm=siswa');
+                redirect('admin/edit_siswa/' . $post['id_siswa']);
             } elseif ($this->form_validation->run() == false or !$this->upload->do_upload('userfile')) {
                 $this->setmessage(validation_errors() . $this->upload->display_errors(), 'warning');
-                redirect('admin/edit_siswa/' . $post['id_siswa'] . '/?m=data_induk&sm=siswa');
+                redirect('admin/edit_siswa/' . $post['id_siswa']);
             } else {
                 $foto = $this->upload->data();
                 //Compress Image
@@ -1875,11 +1889,11 @@ class Admin extends CI_Controller
                 //-->> Set Message <<--
                 $this->setmessage('Berhasil memperbarui data siswa.', 'success');
 
-                redirect('admin/edit_siswa/' . $post['id_siswa'] . '/?m=data_induk&sm=siswa');
+                redirect('admin/edit_siswa/' . $post['id_siswa']);
             }
         } elseif ($this->form_validation->run() == false) {
             $this->setmessage(validation_errors(), 'warning');
-            redirect('admin/edit_siswa/' . $post['id_siswa'] . '/?m=data_induk&sm=siswa');
+            redirect('admin/edit_siswa/' . $post['id_siswa']);
         } else {
             $data = array(
                 'nama_siswa' => trim(ucwords(htmlentities($post['nama_siswa']))),
@@ -1908,36 +1922,20 @@ class Admin extends CI_Controller
                 'kerja_wali' => trim(htmlentities($post['kerja_wali'])),
                 'tahun_ajaran' => trim(htmlentities($post['tahun_ajaran'])),
                 'username' => trim(htmlentities($post['username'])),
-                'password' => trim(md5(htmlentities($post['password']))),
-                'status' => trim($post['status']),
+                'status' => 1,
             );
-
+            // print('<pre>');print_r($data);exit();
             $where = array('id_siswa' => $post['id_siswa']);
             $this->m_admin->update_dataTable($where, $data, 'data_siswa');
 
             //-->> Set Message <<--
-            $this->setmessage('Berhasil memperbarui ' . $jml . ' data siswa.', 'success');
+            $this->setmessage('Berhasil memperbarui data siswa.', 'success');
 
-            redirect('admin/edit_siswa/' . $post['id_siswa'] . '/?m=data_induk&sm=siswa');
+            redirect('admin/data_siswa' );
         }
 
     }
 
-    //-->> Singgle Action <<--
-    public function edit_siswa()
-    {
-        $where = array('id_siswa' => $this->uri->segment(3));
-        $data['data_siswa'] = $this->m_admin->select_dataWhere($where, 'data_siswa');
-        $data['datakelas'] = $this->m_admin->select_table_orderby('nama_kelas ASC', 'setup_kelas');
-        $data['tahunajaran'] = $this->m_admin->select_table_orderby('tahun ASC', 'setup_tahun');
-        $id_admin = $this->session->userdata('id');
-        $where = array('id_admin' => $id_admin);
-        $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Edit Data<small>melakukan perubahan data siswa</small></h1>";
-        //$data['tipe_form'] = "multi";
-        $data['content'] = "admin/v_edit_siswa";
-        $this->load->view('admin/index', $data);
-    }
 
     public function drop_siswa()
     {
