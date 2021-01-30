@@ -105,7 +105,7 @@
                             <a class="nav-link" href="<?= base_url() ?>/admin/setup_ekstra">Ekstrakurikuler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="<?= base_url() ?>/#">Tinggi dan Berat Badan</a>
+                            <a class="nav-link text-danger" href="<?= base_url('admin/tinggi_berat') ?>">Tinggi dan Berat Badan</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-danger" href="<?= base_url() ?>/#">Kondisi Fisik</a>

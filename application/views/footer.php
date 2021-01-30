@@ -19,9 +19,11 @@
     <script src="<?= base_url() ?>assets/js/shared/misc.js"></script>
     <!-- endinject -->
     <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() ?>assets/vendors/select2/select2.min.js"></script>
     <script>
       $(document).ready( function () {
         $('#myTable').DataTable();
+        $('.inputSiswa').select2();
       } );
     </script>
   </body>

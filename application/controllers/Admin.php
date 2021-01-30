@@ -2709,4 +2709,74 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
     }
 
+    public function tinggi_berat()
+    {
+        $data['siswa']   = $this->m_admin->m_get_siswa_tinggi_berat(); 
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/berat_tinggi/v_setup_berat_tinggi";
+        $this->load->view('admin/index', $data);
+    }
+
+    public function tambah_berat_tinggi()
+    {
+        $data['siswa']  = $this->m_admin->m_get_siswa();
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/berat_tinggi/v_tambah_berat_tinggi";
+        $this->load->view('admin/index', $data);
+    }
+
+    public function store_berat_tinggi()
+    {
+        $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required|is_unique[tbl_berat_tinggi.id_siswa]');
+        if ($this->form_validation->run() == false ) {
+            // echo "here";exit();
+            $this->session->set_flashdata('sukses', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Gagal</h4> Data siswa sudah di masukkan </div>');
+            redirect('admin/tambah_berat_tinggi');
+        } else {
+            $nama_siswa = $this->input->post('nama_siswa',true);
+            $berat      = $this->input->post('berat',true);
+            $tinggi     = $this->input->post('tinggi',true);
+            $post = [
+                'id_siswa'        => $nama_siswa,
+                'berat_badan'     => $berat,
+                'tinggi_badan'    => $tinggi
+            ];
+            $this->m_admin->m_store_berat_tinggi($post);
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Menambah Data </div>');
+            redirect('admin/tinggi_berat');
+        }
+    }
+
+    public function edit_berat_tinggi()
+    {
+        $id = $this->uri->segment(3);
+        $data['siswa']  = $this->m_admin->m_get_detail_siswa($id);
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/berat_tinggi/v_edit_berat_tinggi";
+        $this->load->view('admin/index', $data);
+    }
+
+    public function update_berat_tinggi()
+    {
+        $id         = $this->input->post('id_siswa',true);
+        $berat      = $this->input->post('berat',true);
+        $tinggi     = $this->input->post('tinggi',true);
+        $post = [
+            'id'              => $id,
+            'berat_badan'     => $berat,
+            'tinggi_badan'    => $tinggi
+        ];
+        $this->m_admin->m_update_berat_tinggi($post);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Update Data </div>');
+        redirect('admin/tinggi_berat');
+    }
+
+    public function hapus_berat_tinggi()
+    {
+        $id = $this->uri->segment(3);
+        $this->m_admin->m_hapus_berat_tinggal($id);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
+        redirect('admin/tinggi_berat');
+    }
+
 }
