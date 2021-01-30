@@ -112,7 +112,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                                href="<?= base_url() ?>/admin_editnilai/edit_data_kehadiran?m=edit_nilai&sm=data_kehadiran">Ketidakhadiran</a>
+                                href="<?= base_url() ?>admin_editnilai/edit_data_kehadiran">Ketidakhadiran</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-danger" href="<?= base_url() ?>/#">Saran-saran</a>
@@ -170,5 +170,6 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item nav-category">MENU ORANG TUA</li>
         </ul>
     </nav>

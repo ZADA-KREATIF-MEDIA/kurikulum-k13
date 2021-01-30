@@ -706,4 +706,14 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 		$this->db->query($query);
 		return true;
 	}
+/*---------- Mata Pelajaran ---------*/
+	public function update_mata_pelajaran($post)
+	{
+		$this->db->select()
+			->from('setup_pelajaran')
+			->where('id_pelajaran', $post['id_pelajaran']);
+		$query = $this->db->set($post)->get_compiled_update();
+		$this->db->query($query);
+		return true;
+	}
 }

@@ -6,7 +6,7 @@ class Guru extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
-		$this->load->library("PHPExcel");
+		// $this->load->library("PHPExcel");
 		$this->load->model("m_guru");
 		$this->load->model("phpexcel_model");
 		$this->load->model('m_admin');

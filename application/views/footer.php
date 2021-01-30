@@ -18,18 +18,11 @@
     <script src="<?= base_url() ?>assets/js/shared/off-canvas.js"></script>
     <script src="<?= base_url() ?>assets/js/shared/misc.js"></script>
     <!-- endinject -->
-    <script src="<?= base_url() ?>assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
-    <?php if($this->uri->segment(2)== "tambah_siswa"):?>
-    <script src="<?= base_url() ?>assets/vendors/jquery-ui/jquery-ui.min.js"></script>
-    <?php endif;?>
+    <script src="//cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
     <script>
-      <?php if($this->uri->segment(2)== "tambah_siswa"):?>
-        $( function() {
-          $( ".datepicker" ).datepicker({
-            dateFormat: 'dd-mm-yy'
-          });
-        } );
-      <?php endif;?>
+      $(document).ready( function () {
+        $('#myTable').DataTable();
+      } );
     </script>
   </body>
 </html>

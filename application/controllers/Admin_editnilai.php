@@ -905,61 +905,48 @@ public function form_edit_prestasi()
 			$data['kelas'] = $this->m_admin->select_table_orderby('nama_kelas ASC','setup_kelas');
 			$data['semester'] = $this->m_admin->select_table_orderby('semester ASC','setup_semester');
 			$data['tahun'] = $this->m_admin->select_table_orderby('tahun ASC','setup_tahun');
-			$data['page_title'] = '<h1>Edit Kehadiran Siswa<small>Sort berdasarkan kelas, semester dan tahun ajaran</small></h1>';
-						
-			
-			$data['content'] = "admin/v_edit_kehadiran";
-			
+			$data['content'] = "admin/absensi/v_edit_kehadiran";
 			$this->load->view('admin/index',$data);
 		}
 
 	public function form_kehadiran()
 	{
+		
 		$post = $this->input->post();
-		if(isset($post['submit']))
-		{
+		if(isset($post['submit'])){
 			$idkelas = $post['id_kelas'];
 			$idsemester = $post['id_semester'];
 			$idtahun = $post['id_tahun'];
+			$datases = array(
+				'ses_hdr_idkelas' => $idkelas,
+				'ses_hdr_idsms' => $idsemester,
+				'ses_hdr_idthn' => $idtahun
+			);
 
-		$datases = array(
-			'ses_hdr_idkelas' => $idkelas,
-			'ses_hdr_idsms' => $idsemester,
-			'ses_hdr_idthn' => $idtahun
-		);
-
-		$this->session->set_userdata($datases);
-		}
-		else
-		{
+			$this->session->set_userdata($datases);
+		} else {
 			//cek_session;
 			$sesidkls = $this->session->userdata('ses_hdr_idkelas');
 			$sesidsms = $this->session->userdata('ses_hdr_idsms');
 			$sesidthn = $this->session->userdata('ses_hdr_idthn');
-			if($sesidkls!=''&&$sesidsms!=''&&$sesidthn!='')
-			{
+			if($sesidkls!=''&&$sesidsms!=''&&$sesidthn!=''){
 				$idkelas = $sesidkls;
 				$idsemester = $sesidsms;
 				$idtahun = $sesidthn;
-			}
-			else
-			{
-				redirect('admin_editnilai/edit_data_kehadiran?m=edit_nilai&sm=data_kehadiran');
+			} else {
+				redirect('admin_editnilai/edit_data_kehadiran');
 			}
 		}
 		$setup_tahun = $this->m_admin->select_dataWhere('id_tahun='.$idtahun.'','setup_tahun')->row();
 		$setup_semester = $this->m_admin->select_dataWhere('id_semester='.$idsemester.'','setup_semester')->row();
 
-
 		$data['thn_aktif'] = $setup_tahun->tahun;
 		$data['idtahun'] = $setup_tahun->id_tahun;
 		$data['semester_aktif'] = ucwords($setup_semester->semester);
 		$data['idsemester'] = $setup_semester->id_semester;
-
 		$id_admin = $this->session->userdata('id');
 		$where = array('id_admin' => $id_admin);
 		$data['user'] = $this->m_admin->select_dataWhere($where,'user_admin');
-			
 		$data['kelas'] = $this->m_admin->select_dataWhere('id_kelas='.$idkelas.'','setup_kelas');
 		$data['id_kelas'] = $idkelas;
 		//*Body*
@@ -974,8 +961,7 @@ public function form_edit_prestasi()
 			$data['data_kehadiran'] = $this->m_admin->get_siswa_bkhadir($idkelas,$idtahun);
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
 			$data['content'] = "guru/v_form_kehadiran";
-		}elseif($cekdata>0)
-		{
+		}elseif($cekdata>0){
 			$data['page_title'] = '<h1>Update Kehadiran Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['data_kehadiran'] = $data_kehadiran;
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
@@ -1011,7 +997,7 @@ public function form_edit_prestasi()
 
 			$this->m_admin->insert_batch('tbl_kehadiran',$data);
 			$this->setmessage('Data Kehadiran berhasil disimpan!','success');
-			redirect('admin_editnilai/form_kehadiran?m=edit_nilai&sm=data_kehadiran');
+			redirect('admin_editnilai/form_kehadiran');
 		}
 
 		if(isset($post['update']))
@@ -1044,7 +1030,7 @@ public function form_edit_prestasi()
 			}
 
 			$this->setmessage('Data Kehadiran berhasil diperbarui!','success');
-			redirect('admin_editnilai/form_kehadiran?m=edit_nilai&sm=data_kehadiran');
+			redirect('admin_editnilai/form_kehadiran');
 		}
 	}
 

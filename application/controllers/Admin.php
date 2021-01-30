@@ -302,21 +302,9 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $where = array('id_admin' => $id_admin);
         $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Setup Pelajaran<small> mengelola pengaturan Mata Pelajaran</small></h1>";
         $data['datamapel'] = $this->m_admin->select_table_orderby('nama_pelajaran ASC', 'setup_pelajaran');
         $data['kat_mapel'] = $this->m_admin->select_table_orderby('kategori_mapel ASC', 'tbl_kategori_mapel');
-        //Pgination Config::
-        /*$siteurl = site_url('admin/setup_pelajaran/');
-        $rows = $data['datamapel']->num_rows();
-        $perpage = 10;
-        $urisegment = 3;
-        $Mfunction = "data_mapel_wp";
-        //$key = $setup_tahun->id_tahun;
-        $model = "m_admin";
-        $type = "tanpa_where";
-        include("pagination_config.php");*/
-        //end Pagination::
-        $data['content'] = "admin/v_setup_pelajaran";
+        $data['content'] = "admin/mapel/v_setup_pelajaran";
         $this->load->view('admin/index', $data);
     }
 
@@ -330,72 +318,19 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('validation_errors', validation_errors());
 
             $this->session->set_flashdata('error_close', '</div>');
-            redirect('admin/setup_pelajaran/?m=setup&sm=pelajaran');
+            redirect('admin/setup_pelajaran');
         } else {
             $data = array(
                 'id_kat_mapel' => $this->input->post('kat_mapel'),
                 'nama_pelajaran' => $this->input->post('nama_pelajaran'),
-                'sub_mapel' => $this->input->post('sub_mapel'),
             );
             $this->m_admin->insert_dataTo($data, 'setup_pelajaran');
 
             $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses!</h4> Mata Pelajaran berhasil ditambahkan :) </div>');
 
-            redirect('admin/setup_pelajaran?m=setup&sm=pelajaran');
+            redirect('admin/setup_pelajaran');
         }
 
-    }
-
-    //-->> Multi Action <<--
-    public function aksi_mapel()
-    {
-        $post = $this->input->post();
-
-        if (isset($post['multidelete'])) {
-            $check = $post['check'];
-            $jml = count($check);
-            if (isset($check)) {
-
-                //menghapus data di database
-                $cols = "id_pelajaran";
-                $this->m_admin->del_selected_data($post, 'setup_pelajaran', $cols);
-
-                $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="fa fa-check-circle"></i> Sukses!</h4> Berhasil menghapus ' . $jml . ' data Mata Pelajaran.</div>');
-
-                redirect('admin/setup_pelajaran?m=setup&sm=pelajaran');
-            } else {
-                $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Ups, Terjadi kesalahan!</h4> Tidak ada data yang dipilih!');
-
-                $this->session->set_flashdata('error_close', '</div>');
-
-                redirect('admin/setup_pelajaran?m=setup&sm=pelajaran');
-            }
-        }
-
-        if (isset($post['multiedit'])) {
-            $check = $post['check'];
-            if (isset($check)) {
-
-                $cols = "id_pelajaran";
-                $data['select_mapel'] = $this->m_admin->get_selected_data($post, 'setup_pelajaran', $cols);
-                $data['kat_mapel'] = $this->m_admin->select_table_orderby('kategori_mapel ASC', 'tbl_kategori_mapel');
-                $data['datamapel'] = $this->m_admin->select_table_orderby('nama_pelajaran ASC', 'setup_pelajaran');
-                $id_admin = $this->session->userdata('id');
-                $where = array('id_admin' => $id_admin);
-                $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-                $data['page_title'] = "<h1>Edit Mata Pelajaran<small>melakukan perubahan Mata Pelajaran</small></h1>";
-                $data['tipe_form'] = "multi";
-                $data['content'] = "admin/v_edit_pelajaran";
-                $this->load->view('admin/index', $data);
-
-            } else {
-                $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Ups, Terjadi kesalahan!</h4> Tidak ada data yang dipilih!');
-
-                $this->session->set_flashdata('error_close', '</div>');
-
-                redirect('admin/setup_pelajaran?m=setup&sm=pelajaran');
-            }
-        }
     }
 
     public function update_mapel()
@@ -404,37 +339,22 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $this->session->set_flashdata('error_open', '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-warning"></i> Gagal</h4>');
-
             $this->session->set_flashdata('validation_errors', validation_errors());
-
             $this->session->set_flashdata('error_close', '</div>');
-            redirect('admin/setup_pelajaran/?m=setup&sm=pelajaran');
+            redirect('admin/setup_pelajaran');
         } else {
             $id_pelajaran = $this->input->post('id_pelajaran');
             $nama_pelajaran = $this->input->post('nama_pelajaran');
             $kat_mapel = $this->input->post('kat_mapel');
-            $sub_mapel = $this->input->post('sub_mapel');
+            $post = [
+                'id_pelajaran'      => $id_pelajaran,
+                'nama_pelajaran'    => $nama_pelajaran,
+                'id_kat_mapel'         => $kat_mapel
+            ];
+            $this->m_admin->update_mata_pelajaran($post);
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="fa fa-check-circle"></i> Sukses!</h4> Berhasil memperbarui data Mata Pelajaran.</div>');
 
-            $jml = count($id_pelajaran);
-
-            //-->> Perulangan <<--
-
-            foreach ($id_pelajaran as $key => $value) {
-
-                $data[$key]['id_pelajaran'] = $id_pelajaran[$key];
-                $data[$key]['id_kat_mapel'] = $kat_mapel[$key];
-                $data[$key]['sub_mapel'] = $sub_mapel[$key];
-                $data[$key]['nama_pelajaran'] = $nama_pelajaran[$key];
-
-                //$where = array('id_pelajaran' => $id_pelajaran[$key]);
-
-            }
-            $this->m_admin->update_batch('setup_pelajaran', $data, 'id_pelajaran');
-
-            //-->> Set Message <<--
-            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="fa fa-check-circle"></i> Sukses!</h4> Berhasil memperbarui ' . $jml . ' data Mata Pelajaran.</div>');
-
-            redirect('admin/setup_pelajaran/?m=setup&sm=pelajaran');
+            redirect('admin/setup_pelajaran');
 
         }
     }
@@ -2010,7 +1930,6 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $where = array('id_admin' => $id_admin);
         $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Pembagian Ruang Kelas<small> pembagian kelas siswa sesuai tahun dan kelasnya</small></h1>";
 
         //Data Referensi Seluruh Siswa::>>
         //hanya menampilkan siswa yang belum memiliki kelas
@@ -2047,7 +1966,7 @@ class Admin extends CI_Controller
         $type = "dua_where";
         include "pagination_config.php";
         //end Pagination::
-        $data['content'] = "admin/v_pembagian_kelas";
+        $data['content'] = "admin/pembagian_kelas/v_pembagian_kelas";
         $this->load->view('admin/index', $data);
     }
 
@@ -2056,7 +1975,7 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $where = array('id_admin' => $id_admin);
         $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-        $data['page_title'] = "<h1>Pembagian Ruang Kelas<small> pembagian kelas siswa sesuai tahun dan kelasnya</small></h1>";
+      
 
         //Data Referensi Seluruh Siswa::>>
         //hanya menampilkan siswa yang belum memiliki kelas
@@ -2068,7 +1987,7 @@ class Admin extends CI_Controller
         //data kelas
         $data['kelas'] = $this->m_admin->select_table_orderby('nama_kelas ASC', 'setup_kelas');
 
-        $data['content'] = "admin/v_pembagian_kelas_siswabaru";
+        $data['content'] = "admin/setting_kelas/v_pembagian_kelas_siswabaru";
         $this->load->view('admin/index', $data);
     }
 
@@ -2099,17 +2018,17 @@ class Admin extends CI_Controller
 
                 if ($cek_data > 0) {
                     $this->setmessage('Tidak dapat memproses data. Ini terjadi karena system menemukan data yang dianggap sama!', 'danger');
-                    redirect('admin/ruangkelas_siswa_baru?m=penjadwalan&sm=set_kelas_siswa_baru');
+                    redirect('admin/ruangkelas_siswa_baru');
                 } else {
                     $this->m_admin->set_pembagian_kelas($post);
 
                     $this->setmessage($jml . ' data berhasil diperbarui!', 'success');
-                    redirect('admin/ruangkelas_siswa_baru?m=penjadwalan&sm=set_kelas_siswa_baru');
+                    redirect('admin/ruangkelas_siswa_baru');
                 }
 
             } else {
                 $this->setmessage('Tidak ada data yang terpilih!', 'warning');
-                redirect('admin/ruangkelas_siswa_baru?m=penjadwalan&sm=set_kelas_siswa_baru');
+                redirect('admin/ruangkelas_siswa_baru');
             }
         }
 
@@ -2126,17 +2045,17 @@ class Admin extends CI_Controller
 
                 if ($cek_data > 0) {
                     $this->setmessage('Tidak dapat memproses data. Ini terjadi karena system menemukan data yang dianggap sama!', 'danger');
-                    redirect('admin/jadwal_ruangkelas?m=penjadwalan&sm=ruang_kelas');
+                    redirect('admin/jadwal_ruangkelas');
                 } else {
                     $this->m_admin->set_pembagian_kelas($post);
 
                     $this->setmessage($jml . ' data berhasil diperbarui!', 'success');
-                    redirect('admin/jadwal_ruangkelas?m=penjadwalan&sm=ruang_kelas');
+                    redirect('admin/jadwal_ruangkelas');
                 }
 
             } else {
                 $this->setmessage('Tidak ada data yang terpilih!', 'warning');
-                redirect('admin/jadwal_ruangkelas?m=penjadwalan&sm=ruang_kelas');
+                redirect('admin/jadwal_ruangkelas');
             }
         }
 
@@ -2153,10 +2072,10 @@ class Admin extends CI_Controller
                 $this->m_admin->hapus_siswa_dari_kelas($post, 'tbl_ruangan', $cols);
 
                 $this->setmessage($jml . ' Data berhasil dihapus!', 'success');
-                redirect('admin/jadwal_ruangkelas?m=penjadwalan&sm=ruang_kelas');
+                redirect('admin/jadwal_ruangkelas');
             } else {
                 $this->setmessage('Terjadi kesalahan. Tidak ada data yang dipilih!', 'warning');
-                redirect('admin/jadwal_ruangkelas?m=penjadwalan&sm=ruang_kelas');
+                redirect('admin/jadwal_ruangkelas');
             }
         }
     }
