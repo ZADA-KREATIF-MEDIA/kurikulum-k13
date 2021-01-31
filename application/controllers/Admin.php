@@ -2719,7 +2719,9 @@ class Admin extends CI_Controller
 
     public function tambah_berat_tinggi()
     {
-        $data['siswa']  = $this->m_admin->m_get_siswa();
+        $data['siswa']      = $this->m_admin->m_get_siswa();
+        $data['semester']   = $this->m_admin->m_get_semester_aktif();
+        $data['tahun']      = $this->m_admin->m_get_tahun_aktif();
         // print('<pre>');print_r($data);exit();
         $data['content'] = "admin/berat_tinggi/v_tambah_berat_tinggi";
         $this->load->view('admin/index', $data);
@@ -2727,19 +2729,18 @@ class Admin extends CI_Controller
 
     public function store_berat_tinggi()
     {
-        $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required|is_unique[tbl_berat_tinggi.id_siswa]');
+        $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
         if ($this->form_validation->run() == false ) {
             // echo "here";exit();
             $this->session->set_flashdata('sukses', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Gagal</h4> Data siswa sudah di masukkan </div>');
             redirect('admin/tambah_berat_tinggi');
         } else {
-            $nama_siswa = $this->input->post('nama_siswa',true);
-            $berat      = $this->input->post('berat',true);
-            $tinggi     = $this->input->post('tinggi',true);
             $post = [
-                'id_siswa'        => $nama_siswa,
-                'berat_badan'     => $berat,
-                'tinggi_badan'    => $tinggi
+                'id_siswa'      => $this->input->post('nama_siswa',true),
+                'berat_badan'   => $this->input->post('berat',true),
+                'tinggi_badan'  => $this->input->post('tinggi',true),
+                'id_semester'   => $this->input->post('semester',true),
+                'id_tahun'      => $this->input->post('tahun',true) 
             ];
             $this->m_admin->m_store_berat_tinggi($post);
             $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Menambah Data </div>');
@@ -2751,6 +2752,8 @@ class Admin extends CI_Controller
     {
         $id = $this->uri->segment(3);
         $data['siswa']  = $this->m_admin->m_get_detail_siswa($id);
+        $data['semester']   = $this->m_admin->m_get_semester_aktif();
+        $data['tahun']      = $this->m_admin->m_get_tahun_aktif();
         // print('<pre>');print_r($data);exit();
         $data['content'] = "admin/berat_tinggi/v_edit_berat_tinggi";
         $this->load->view('admin/index', $data);
@@ -2758,13 +2761,12 @@ class Admin extends CI_Controller
 
     public function update_berat_tinggi()
     {
-        $id         = $this->input->post('id_siswa',true);
-        $berat      = $this->input->post('berat',true);
-        $tinggi     = $this->input->post('tinggi',true);
         $post = [
-            'id'              => $id,
-            'berat_badan'     => $berat,
-            'tinggi_badan'    => $tinggi
+            'id'            => $this->input->post('id_siswa',true),
+            'berat_badan'   => $this->input->post('berat',true),
+            'tinggi_badan'  => $this->input->post('tinggi',true),
+            'id_semester'   => $this->input->post('semester',true),
+            'id_tahun'      => $this->input->post('tahun',true)
         ];
         $this->m_admin->m_update_berat_tinggi($post);
         $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Update Data </div>');

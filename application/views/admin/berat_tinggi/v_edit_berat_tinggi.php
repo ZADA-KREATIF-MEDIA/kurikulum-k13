@@ -17,7 +17,7 @@
 						<input type="text" class="form-control" id="nama_siswa" value="<?= $siswa['nama_siswa'] ?>" readonly>
 					</div>
 					<div class="row">
-						<div class="form-group col">
+						<div class="form-group col-md-6">
 							<label for="berat">Berat Badan</label>
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Masukkan berat badan siswa" id="berat" name="berat" value="<?= $siswa['berat_badan'] ?>" onkeyup="this.value=this.value.replace(/[^\d]/,'')" required>
@@ -26,7 +26,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group col">
+						<div class="form-group col-md-6">
 							<label for="tinggi">Tinggi Badan</label>
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="Masukkan tinggi badan siswa" id="tinggi" name="tinggi" value="<?= $siswa['tinggi_badan'] ?>" onkeyup="this.value=this.value.replace(/[^\d]/,'')" required>
@@ -34,6 +34,22 @@
 									<span class="input-group-text">cm</span>
 								</div>
 							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="semester">Semester</label>
+							<select name="semester" id="semester" class="form-control">
+								<?php foreach($semester as $smt):?>
+									<option value="<?= $smt['id_semester']?>"><?= ucwords($smt['semester'])?></option>
+								<?php endforeach;?>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="tahun">Tahun</label>
+							<select name="tahun" id="tahun" class="form-control">
+								<?php foreach($tahun as $thn):?>
+									<option value="<?= $thn['id_tahun']?>"><?= $thn['tahun'] ?></option>
+								<?php endforeach;?>
+							</select>
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success">Simpan</button>

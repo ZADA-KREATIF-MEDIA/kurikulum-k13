@@ -67,7 +67,7 @@ class Login extends CI_Controller {
 					);
 				$this->session->set_userdata($data_session);
 
-				redirect('admin?m=dashboard');
+				redirect('admin');
 			}else{
 
 				$this->session->set_flashdata('notif', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Username atau Password tidak sah.</div>');
@@ -107,6 +107,38 @@ class Login extends CI_Controller {
 
 			}
 		}
+
+		if($level=="orangtua"){
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+
+			$where = array(
+				'username' => $username,
+				'password' => md5($password)
+			);
+
+			$cek = $this->m_login->cek_login('data_siswa',$where)->num_rows();
+			$row = $this->m_login->cek_login('data_siswa',$where)->row();
+
+			if($cek > 0){
+
+				$data_session = array(
+					'id' => $row->id_guru,
+					'nama' => $row->nama_guru,
+					'status' => "orang_tua",
+					'waktu' => date('d-m-Y H:i:s')
+					);
+				$this->session->set_userdata($data_session);
+
+				redirect('ortu');
+			}else{
+
+				$this->session->set_flashdata('notif', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Username atau Password tidak sah. </div>');
+				redirect('login');
+
+			}
+		}
+		
 	}
 
 	function logout(){

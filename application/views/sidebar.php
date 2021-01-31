@@ -16,6 +16,7 @@
                     </div>
                 </a>
             </li>
+            <?php if($this->session->userdata('status') == "admin"):?>
             <li class="nav-item nav-category">Menu Utama</li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url() ?>#">
@@ -139,6 +140,7 @@
                     </ul>
                 </div>
             </li>
+            <?php elseif($this->session->userdata('status') == "guru"):?>
             <li class="nav-item nav-category">MENU GURU</li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#guru" aria-expanded="false" aria-controls="auth">
@@ -170,6 +172,8 @@
                     </ul>
                 </div>
             </li>
+            <?php else:?>
             <li class="nav-item nav-category">MENU ORANG TUA</li>
+            <?php endif;?>
         </ul>
     </nav>

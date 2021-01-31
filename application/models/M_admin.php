@@ -772,4 +772,24 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 		$this->db->query($query);
 		return true;
 	}
+
+	public function m_get_semester_aktif()
+	{
+		$this->db->select('id_semester, semester')
+			->from('setup_semester')
+			->where('status_semester',1);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->result_array();
+		return $data;
+	}
+
+	public function m_get_tahun_aktif()
+	{
+		$this->db->select('id_tahun, tahun')
+			->from('setup_tahun')
+			->where('status_aktif',1);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->result_array();
+		return $data;
+	}
 }
