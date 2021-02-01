@@ -98,6 +98,7 @@
                                 Pengetahuan <br>Dan
                                 Ketrampilan</a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url() ?>/admin_editnilai/edit_prestasi">Prestasi
                                 Siswa</a>
@@ -106,18 +107,16 @@
                             <a class="nav-link" href="<?= base_url() ?>/admin/setup_ekstra">Ekstrakurikuler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="<?= base_url('admin/tinggi_berat') ?>">Tinggi dan Berat Badan</a>
+                            <a class="nav-link" href="<?= base_url('admin/tinggi_berat') ?>">Tinggi dan Berat Badan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="<?= base_url() ?>/#">Kondisi Fisik</a>
+                            <a class="nav-link" href="<?= base_url() ?>admin/kondisi_fisik">Kondisi Fisik</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
                                 href="<?= base_url() ?>admin_editnilai/edit_data_kehadiran">Ketidakhadiran</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="<?= base_url() ?>/#">Saran-saran</a>
-                        </li>
+                        
                     </ul>
                 </div>
             </li>
@@ -171,6 +170,75 @@
                         </li>
                     </ul>
                 </div>
+                
+            </li>
+            <li class="nav-item nav-category">MENU WALI KELAS</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#guru" aria-expanded="false" aria-controls="auth">
+                    <i class="menu-icon typcn typcn-document-add"></i>
+                    <span class="menu-title">Penilaian Siswa</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="guru">
+                    <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/input_catatanwk"
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Saran-Saran</span>
+                            </a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/input_kehadiran">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Kehadiran Siswa</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/input_prestasi">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Prestasi</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/ekstra_kurikuler">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title ">Ekstrakulikuler</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/input_nilai_sikap">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Kopentensi Sikap</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/input_nilai">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Nilai Mata Pelajaran</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/input_deskripsi_nilai">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Saran/Keterangan Nilai</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= base_url() ?>guru/#">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Kondisi fisik</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                href="<?= base_url() ?>guru/laporan_per_mapel?m=laporan_nilai&sm=per_mapel">
+                                <i class="menu-icon typcn typcn-document-text"></i>
+                                <span class="menu-title">Laporan Nilai Siswa</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
             </li>
             <?php else:?>
             <li class="nav-item nav-category">MENU ORANG TUA</li>

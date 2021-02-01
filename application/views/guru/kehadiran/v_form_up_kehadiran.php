@@ -7,23 +7,26 @@
 	</div>
     <div class="row">
     	<div class="col-md-12">
+		<div class="alert alert-primary" role="alert">
+		<h5 class="box-title">Kelas  <?php echo $kelas->row('nama_kelas'); ?>, Semester <b><?php echo $semester_aktif; ?></b></h5>
+</div>
             <div class="box">
                 <div class="box-header">
-					<h3 class="box-title">Kelas  <?php echo $kelas->row('nama_kelas'); ?>, Semester <b><?php echo $semester_aktif; ?></b></h3>
+					
                 </div><!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
-            		<table  class="table table-hover table-bordered">
-						<thead>
-							<tr class="bg-secondary">
-								<th rowspan=2>No. <?php echo $id_kelas;?></th>
+                <div class="box-body ">
+            		<table  class="table  table-bordered  table-responsive">
+						<thead class="text-center">
+							<tr class="">
+								<th rowspan=2>No.</th>
 								<th rowspan=2>Nis</th>
 								<th rowspan=2>Nama</th>
-								<th colspan=6  valign=top>Ketidakhadiran <h6 small>S=sakit, I=ijin, TK=tanpa keterangan</h6></th>
+							
 							</tr>
-							<tr>
-								<th bgcolor=#39CCCC>S</th> 
-								<th bgcolor=#39CCCC>I</th> 
-								<th bgcolor=#39CCCC>TK</th> 
+							<tr class="">
+								<th >Sakit</th> 
+								<th >Ijin</th> 
+								<th >Tanpa Keterangan</th> 
 							</tr>
 						</thead>
 						<?php if($this->session->userdata('status')=="guru") : ?>
@@ -52,10 +55,8 @@
 						endforeach;
 					?>
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td  colspan=3>
+							
+							<td  colspan="6">
 								<input type="hidden" name="jumlah" value="<?php echo $jumSis ?>" /><input type="submit" value="Simpan perubahan" name="update" class="btn btn-primary"/> 
 								<?php if($this->session->userdata('status')=="admin"):?>
 									&nbsp;  -  &nbsp;<a  onclick="return confirm('Data belum disimpan,apakah Anda yakin batal?')" href="<?php echo base_url('admin_editnilai/edit_data_kehadiran');?>" button class="btn btn-danger"/><small class="glyphicon glyphicon-chevron-left"></small> Batal</a>

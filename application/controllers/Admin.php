@@ -1601,30 +1601,7 @@ class Admin extends CI_Controller
         }
     }
 
-    //-->> Multi Action <<--
-    public function aksi_siswa()
-    {
-        $post = $this->input->post();
-
-        if (isset($post['multidelete'])) {
-            $check = $post['check'];
-            $jml = count($check);
-            if (isset($check)) {
-
-                //menghapus data di database
-                $cols = "id_siswa";
-                $this->m_admin->del_selected_data($post, 'data_siswa', $cols);
-
-                $this->setmessage('Berhasil menghapus ' . $jml . ' data siswa.', 'success');
-
-                redirect('admin/data_siswa?m=data_induk&sm=siswa');
-            } else {
-                $this->setmessage('Tidak ada data yang dipilih!', 'warning');
-                redirect('admin/data_siswa?m=data_induk&sm=siswa');
-            }
-        }
-
-    }
+  
 
     public function detail_siswa()
     {
@@ -2727,6 +2704,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/index', $data);
     }
 
+
     public function store_berat_tinggi()
     {
         $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
@@ -2779,6 +2757,78 @@ class Admin extends CI_Controller
         $this->m_admin->m_hapus_berat_tinggal($id);
         $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
         redirect('admin/tinggi_berat');
+    }
+
+    // KONDISI FISIK SISWA //
+    public function kondisi_fisik()
+    {
+        $data['siswa']   = $this->m_admin->m_get_siswa_kondisi_fisik(); 
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/kondisi_fisik/v_setup_kondisi_fisik";
+        $this->load->view('admin/index', $data);
+    }
+    public function tambah_kondisi_fisik()
+    {
+        $data['siswa']      = $this->m_admin->m_get_siswa();
+        $data['semester']   = $this->m_admin->m_get_semester_aktif();
+        $data['tahun']      = $this->m_admin->m_get_tahun_aktif();
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/kondisi_fisik/v_tambah_kondisi_fisik";
+        $this->load->view('admin/index', $data);
+    }
+    public function store_kondisi_fisik()
+    {
+        $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
+        if ($this->form_validation->run() == false ) {
+            // echo "here";exit();
+            $this->session->set_flashdata('sukses', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Gagal</h4> Data siswa sudah di masukkan </div>');
+            redirect('admin/tambah_berat_tinggi');
+        } else {
+            $post = [
+                'id_siswa'      => $this->input->post('nama_siswa',true),
+                'penglihatan'   => $this->input->post('penglihatan',true),
+                'pendengaran'  => $this->input->post('pendengaran',true),
+                'gigi'  => $this->input->post('gigi',true),
+                'id_semester'   => $this->input->post('semester',true),
+                'id_tahun'      => $this->input->post('tahun',true) 
+            ];
+            $this->m_admin->m_store_kondisi_fisik($post);
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Menambah Data </div>');
+            redirect('admin/kondisi_fisik');
+        }
+    }
+    public function edit_kondisi_fisik()
+    {
+        $id = $this->uri->segment(3);
+        $data['siswa']  = $this->m_admin->m_get_detail_fisik_siswa($id);
+        $data['semester']   = $this->m_admin->m_get_semester_aktif();
+        $data['tahun']      = $this->m_admin->m_get_tahun_aktif();
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "admin/kondisi_fisik/v_edit_kondisi_fisik";
+        $this->load->view('admin/index', $data);
+    }
+
+    public function update_kondisi_fisik()
+    {
+        $post = [
+            'id'      => $this->input->post('id',true),
+            'id_siswa'      => $this->input->post('id_siswa',true),
+            'penglihatan'   => $this->input->post('penglihatan',true),
+            'pendengaran'  => $this->input->post('pendengaran',true),
+            'gigi'  => $this->input->post('gigi',true),
+            'id_semester'   => $this->input->post('semester',true),
+            'id_tahun'      => $this->input->post('tahun',true) 
+        ];
+        $this->m_admin->m_update_kondisi_fisik($post);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Update Data </div>');
+        redirect('admin/kondisi_fisik');
+    }
+    public function hapus_kondisi_fisik()
+    {
+        $id = $this->uri->segment(3);
+        $this->m_admin->m_hapus_kondisi_fisik($id);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
+        redirect('admin/kondisi_fisik');
     }
 
 }
