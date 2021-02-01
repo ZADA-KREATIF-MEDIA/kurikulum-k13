@@ -108,7 +108,7 @@ $set_header .= "</tbody></table><br>";
       $noA = 1;
       foreach ($nilai_rapor->result() as $rownilai) {
         if ($rownilai->id_kat_mapel == 1) {
-          if ($rownilai->sub_mapel == 0) {
+          
       ?>
             <!-- Cek Apakah ini Mapel Utama?? -->
 
@@ -138,7 +138,7 @@ $set_header .= "</tbody></table><br>";
             $s = 'a';
 
             foreach ($nilai_rapor->result() as $subrownilai) {
-              if ($subrownilai->sub_mapel == $rownilai->id_pelajaran) { ?>
+              ?>
                 <tr>
                   <td align="center" valign="middle"></td>
 
@@ -160,9 +160,9 @@ $set_header .= "</tbody></table><br>";
                   <td valign="middle"><?php echo $subrownilai->pengetahuan; ?></td>
                 </tr>
       <?php
-              }
+              
             }
-          }
+          
         }
       }
 
@@ -400,7 +400,6 @@ $set_header .= "</tbody></table><br>";
       $noE = 1;
       foreach ($nilai_rapor->result() as $rownilai) {
         if ($rownilai->id_kat_mapel == 1) {
-          if ($rownilai->sub_mapel == 0) {
       ?>
             <!-- Cek Apakah ini Mapel Utama?? -->
 
@@ -430,7 +429,7 @@ $set_header .= "</tbody></table><br>";
             $s11 = 'a';
 
             foreach ($nilai_rapor->result() as $subrownilai) {
-              if ($subrownilai->sub_mapel == $rownilai->id_pelajaran) { ?>
+             ?>
                 <tr>
                   <td align="center" valign="middle"></td>
 
@@ -452,9 +451,9 @@ $set_header .= "</tbody></table><br>";
                   <td valign="middle"><?php echo $subrownilai->ketrampilan; ?></td>
                 </tr>
       <?php
-              }
+              
             }
-          }
+          
         }
       }
 

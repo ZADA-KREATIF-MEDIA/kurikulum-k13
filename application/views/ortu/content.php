@@ -1,1 +1,1 @@
-<h1>Ini halaman orang tua</h1>
+<h1>Selamat Datang Orangtua / Wali dari <?= $this->session->userdata['nama'] ?></h1>

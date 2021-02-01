@@ -1194,6 +1194,7 @@ class Admin extends CI_Controller
                 'telpon_guru' => trim(htmlentities($post['telpon'])),
                 'username' => trim(htmlentities($post['username'])),
                 'nik' => trim(strtoupper(htmlentities($post['nik']))),
+                'password' => trim(md5(htmlentities($post['password']))),
             );
 
             $this->m_admin->insert_dataTo($data, 'data_guru');
@@ -2767,6 +2768,7 @@ class Admin extends CI_Controller
         $data['content'] = "admin/kondisi_fisik/v_setup_kondisi_fisik";
         $this->load->view('admin/index', $data);
     }
+
     public function tambah_kondisi_fisik()
     {
         $data['siswa']      = $this->m_admin->m_get_siswa();
@@ -2797,6 +2799,7 @@ class Admin extends CI_Controller
             redirect('admin/kondisi_fisik');
         }
     }
+
     public function edit_kondisi_fisik()
     {
         $id = $this->uri->segment(3);
@@ -2830,5 +2833,6 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
         redirect('admin/kondisi_fisik');
     }
+
 
 }

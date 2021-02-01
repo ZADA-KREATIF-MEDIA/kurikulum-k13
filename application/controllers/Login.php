@@ -123,8 +123,8 @@ class Login extends CI_Controller {
 			if($cek > 0){
 
 				$data_session = array(
-					'id' => $row->id_guru,
-					'nama' => $row->nama_guru,
+					'id' => $row->id_siswa,
+					'nama' => $row->nama_siswa,
 					'status' => "orang_tua",
 					'waktu' => date('d-m-Y H:i:s')
 					);

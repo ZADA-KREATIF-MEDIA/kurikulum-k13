@@ -1,8 +1,5 @@
 <?php
-/**
-| Application Name : SINO 2018
-| By : watulintang.com
-*/
+
 class M_admin extends CI_Model{
 
 function insert_batch($table,$data)
@@ -784,11 +781,13 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 		$data = $this->db->query($query)->result_array();
 		return $data;	
 	}
+
 	public function m_store_kondisi_fisik($post)
 	{
 		$this->db->insert('tbl_kondisi_fisik', $post);
         return true;
 	}
+
 	public function m_get_detail_fisik_siswa($id)
 	{
 		$this->db->select('a.id, a.id_siswa, a.penglihatan, a.pendengaran,a.gigi, b.nama_siswa')
@@ -799,6 +798,7 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 		$data = $this->db->query($query)->row_array();
 		return $data;
 	}
+
 	public function m_update_kondisi_fisik($post)
 	{
 		$this->db->select()
@@ -808,6 +808,7 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
         $this->db->query($query);
         return true;	
 	}
+	
 	public function m_hapus_kondisi_fisik($id)
 	{
 		$this->db->select()

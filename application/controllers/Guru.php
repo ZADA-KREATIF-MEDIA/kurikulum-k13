@@ -23,6 +23,7 @@ class Guru extends CI_Controller {
 
 	}
 
+
 	/*
 	|=================================================================================
 	| 1) DAHSBOARD GURU
@@ -1656,8 +1657,46 @@ public function setmessage($message,$label)
 		$this->load->view('guru/index',$data);
 	}
 
+/*----------- Kondisi Fisik Siswa ---------*/
+	public function kondisi_fisik()
+	{
+		$data['siswa']   = $this->m_guru->m_get_siswa_kondisi_fisik(); 
+		// print('<pre>');print_r($data);exit();
+		$data['content'] = "guru/kondisi_fisik/v_setup_kondisi_fisik";
+		$this->load->view('guru/index', $data);
+	}
 
+	public function edit_kondisi_fisik()
+    {
+        $id = $this->uri->segment(3);
+        $data['siswa']  = $this->m_guru->m_get_detail_fisik_siswa($id);
+        $data['semester']   = $this->m_guru->m_get_semester_aktif();
+        $data['tahun']      = $this->m_guru->m_get_tahun_aktif();
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "guru/kondisi_fisik/v_edit_kondisi_fisik";
+        $this->load->view('guru/index', $data);
+    }
 
-
-
+    public function update_kondisi_fisik()
+    {
+        $post = [
+            'id'      => $this->input->post('id',true),
+            'id_siswa'      => $this->input->post('id_siswa',true),
+            'penglihatan'   => $this->input->post('penglihatan',true),
+            'pendengaran'  => $this->input->post('pendengaran',true),
+            'gigi'  => $this->input->post('gigi',true),
+            'id_semester'   => $this->input->post('semester',true),
+            'id_tahun'      => $this->input->post('tahun',true) 
+        ];
+        $this->m_guru->m_update_kondisi_fisik($post);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Update Data </div>');
+        redirect('guru/kondisi_fisik');
+    }
+    public function hapus_kondisi_fisik()
+    {
+        $id = $this->uri->segment(3);
+        $this->m_guru->m_hapus_kondisi_fisik($id);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
+        redirect('guru/kondisi_fisik');
+    }
 }

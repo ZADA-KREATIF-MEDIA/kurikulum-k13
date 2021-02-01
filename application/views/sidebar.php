@@ -107,7 +107,7 @@
                             <a class="nav-link" href="<?= base_url() ?>/admin/setup_ekstra">Ekstrakurikuler</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url('admin/tinggi_berat') ?>">Tinggi dan Berat Badan</a>
+                            <a class="nav-link" href="<?= base_url() ?>admin/tinggi_berat">Tinggi dan Berat Badan</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= base_url() ?>admin/kondisi_fisik">Kondisi Fisik</a>
@@ -224,7 +224,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url() ?>guru/#">
+                            <a class="nav-link" href="<?= base_url() ?>guru/kondisi_fisik">
                                 <i class="menu-icon typcn typcn-document-text"></i>
                                 <span class="menu-title">Kondisi fisik</span>
                             </a>
@@ -242,6 +242,20 @@
             </li>
             <?php else:?>
             <li class="nav-item nav-category">MENU ORANG TUA</li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="<?= base_url() ?>ortu/nilai_raport" aria-expanded="false" aria-controls="auth">
+                    <i class="menu-icon typcn typcn-document-add"></i>
+                    <span class="menu-title">Rapot</span>
+                </a>
+                <a class="nav-link"  href="<?= base_url() ?>ortu/kompetensi_siswa" aria-expanded="false" aria-controls="auth">
+                    <i class="menu-icon typcn typcn-document-add"></i>
+                    <span class="menu-title">Kompetensi Sikap</span>
+                </a>
+                <a class="nav-link"  href="<?= base_url() ?>ortu/saran_saran" aria-expanded="false" aria-controls="auth">
+                    <i class="menu-icon typcn typcn-document-add"></i>
+                    <span class="menu-title">Saran - saran</span>
+                </a>
+            </li>
             <?php endif;?>
         </ul>
     </nav>
