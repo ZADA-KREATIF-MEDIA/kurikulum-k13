@@ -695,7 +695,7 @@ public function aksi_input_deskripsi()
 		$data['cek_nilai_sikap'] = $this->m_guru->get_nilai_sikap2($id_wali_kelas,$data['idtahun'],$data['idsemester']);
 		
 
-		$data['content'] = "guru/v_input_sikap";
+		$data['content'] = "guru/nilai_sikap/v_input_sikap";
 		$this->load->view('guru/index',$data);
 	}
 
@@ -731,13 +731,13 @@ public function aksi_input_deskripsi()
 			$data['page_title'] = '<h1>Input Nilai Sikap Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['nilai_sikap'] = $this->m_guru->get_nilai_sikap1($post_idkelas,$post_idtahun);
 			$data['jumSis'] = $data['nilai_sikap']->num_rows();
-			$data['content'] = "guru/v_form_nilai_sikap";
+			$data['content'] = "guru/nilai_sikap/v_form_nilai_sikap";
 		}elseif(isset($_POST['update']))
 		{
 			$data['page_title'] = '<h1>Update Nilai Sikap Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['nilai_sikap'] = $this->m_guru->get_nilai_sikap2($post_idkelas,$post_idtahun,$post_semester);
 			$data['jumSis'] = $data['nilai_sikap']->num_rows();
-			$data['content'] = "guru/v_form_up_nilai_sikap";
+			$data['content'] = "guru/nilai_sikap/v_form_up_nilai_sikap";
 		}
 
 		$this->load->view('guru/index',$data);
@@ -833,7 +833,7 @@ public function aksi_input_deskripsi()
 		
 		$data['nilai_ekstra'] = $this->m_guru->get_nilai_ekstra($idkelas,$data['idtahun'],$data['idsemester']);
 			
-		$data['content'] = "guru/v_siswa_nilai_ekstra";
+		$data['content'] = "guru/ekstra/v_siswa_nilai_ekstra";
 		
 		$this->load->view('guru/index',$data);
 	}
@@ -872,7 +872,7 @@ public function aksi_input_deskripsi()
 			$data['nilai_ekstra'] = $this->m_guru->lihat_nilai_ekstra($where);
 			$data['page_title'] = '<h1>Input Nilai Ekstra Kurikuler '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['type_form'] = "update";
-			$data['content'] = "guru/v_form_in_nilai_ekstra";
+			$data['content'] = "guru/ekstra/v_form_in_nilai_ekstra";
 		}
 			
 
@@ -1012,7 +1012,7 @@ public function aksi_input_deskripsi()
 	
 		$data['prestasi_siswa'] = $this->m_guru->get_prestasi_siswa($idkelas,$data['idtahun'],$data['idsemester']);
 		
-		$data['content'] = "guru/v_prestasi_list_siswa";
+		$data['content'] = "guru/prestasi/v_prestasi_list_siswa";
 		
 		$this->load->view('guru/index',$data);
 	}
@@ -1075,7 +1075,7 @@ public function aksi_input_deskripsi()
 			$data['nama_kelas'] = $this->m_guru->select_cols('nama_kelas','id_kelas='.$data['idkelas'].'','setup_kelas')->row('nama_kelas');
 			$data['page_title'] = '<h1>Input Prestasi Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['type_form'] = "input";
-			$data['content'] = "guru/v_form_input_prestasi";
+			$data['content'] = "guru/prestasi/v_form_input_prestasi";
 		}
 		else
 		{
@@ -1089,7 +1089,7 @@ public function aksi_input_deskripsi()
 			$data['prestasi_siswa'] = $this->m_guru->lihat_prestasi_persiswa($where);
 			$data['page_title'] = '<h1>Update Prestasi Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['type_form'] = "update";
-			$data['content'] = "guru/v_form_input_prestasi";
+			$data['content'] = "guru/prestasi/v_form_input_prestasi";
 		}
 			
 
@@ -1223,7 +1223,7 @@ public function aksi_input_deskripsi()
 		$data['cek_hadir'] = $this->m_guru->get_data_bkhadir($id_wali_kelas,$data['idtahun'],$data['idsemester']);
 		
 
-		$data['content'] = "guru/v_input_kehadiran";
+		$data['content'] = "guru/kehadiran/v_input_kehadiran";
 		$this->load->view('guru/index',$data);
 	}
 
@@ -1258,13 +1258,13 @@ public function aksi_input_deskripsi()
 
 			$data['data_kehadiran'] = $this->m_guru->get_siswa_bkhadir($post_idkelas,$post_idtahun);
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
-			$data['content'] = "guru/v_form_kehadiran";
+			$data['content'] = "guru/kehadiran/v_form_kehadiran";
 		}elseif(isset($_POST['update']))
 		{
 			$data['page_title'] = '<h1>Update Kehadiran Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['data_kehadiran'] = $this->m_guru->get_data_bkhadir($post_idkelas,$post_idtahun,$post_semester);
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
-			$data['content'] = "guru/v_form_up_kehadiran";
+			$data['content'] = "guru/kehadiran/v_form_up_kehadiran";
 		}
 		$this->load->view('guru/index',$data);
 	}
@@ -1367,7 +1367,7 @@ public function aksi_input_deskripsi()
 		$data['cek_catatan'] = $this->m_guru->get_catatan_walikelas2($id_wali_kelas,$data['idtahun'],$data['idsemester']);
 		
 
-		$data['content'] = "guru/v_catatanwk_listkelas";
+		$data['content'] = "guru/saran/v_catatanwk_listkelas";
 		$this->load->view('guru/index',$data);
 	}
 
@@ -1403,13 +1403,13 @@ public function aksi_input_deskripsi()
 			$data['page_title'] = '<h1>Input Catatan '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['catatanwk'] = $this->m_guru->get_catatan_walikelas1($post_idkelas,$post_idtahun);
 			$data['jumSis'] = $data['catatanwk']->num_rows();
-			$data['content'] = "guru/v_form_input_catatanwk";
+			$data['content'] = "guru/saran/v_form_input_catatanwk";
 		}elseif(isset($_POST['update']))
 		{
 			$data['page_title'] = '<h1>Update Catatan '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['catatanwk'] = $this->m_guru->get_catatan_walikelas2($post_idkelas,$post_idtahun,$post_semester);
 			$data['jumSis'] = $data['catatanwk']->num_rows();
-			$data['content'] = "guru/v_form_up_catatanwk";
+			$data['content'] = "guru/saran/v_form_up_catatanwk";
 		}
 
 		$this->load->view('guru/index',$data);

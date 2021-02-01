@@ -1,7 +1,4 @@
 
-<!--  start page-heading -->
-   <?php include('application/views/section_header.php');?>
-<!-- end page-heading -->
 <?php
 $nilai_sikap = $cek_nilai_sikap->num_rows();
 $nama_kelas = $kelas->row('nama_kelas');
@@ -9,17 +6,18 @@ $idkelas = $kelas->row('id_kelas');
 ?>
 <section class="content">
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
           <?php echo $this->session->flashdata('notif');?>
         </div>
       </div>
       <div class="row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
+            <div class="alert alert-primary" role="alert">
+                <h4>Data Kelas : (Anda memiliki tanggung jawab input data Kopentensi Sikap Siswa sebagai wali kelas)</h4>
+            </div>
               <div class="box">
 		
-                <div class="box-header">
-                  <h3 class="box-title">Pilih sesuai semester yang akan anda isi nilainya</h3>
-                </div><!-- /.box-header -->
+               
 				
                 <div class="box-body">
                   
@@ -29,22 +27,22 @@ $idkelas = $kelas->row('id_kelas');
                         <input type="hidden" name="idkelas" value="<?php echo $idkelas;?>">
                         <input type="hidden" name="idtahun" value="<?php echo $idtahun;?>">
                         <label>Kelas : </label>
-                      <p class="form-control-static"><?php echo $nama_kelas;?></p>
+                        <input class="form-control ml-3" type="text" value="<?php echo $nama_kelas;?>" readonly>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group ml-5">
                       <label>Semester : </label>
-                      <select class="form-control" name="semester">
+                      <select class="form-control form-control-sm ml-3" name="semester">
                         <option value="<?php echo $idsemester;?>"><?php echo $semester_aktif;?></option>
                       </select>
                     </div>
                     <?php
                     if($nilai_sikap>0)
                     {
-                      echo "<button class='btn btn-warning' type='submit' name='update'>Update Nilai</button>";
+                      echo "<button class='btn btn-primary ml-3' type='submit' name='update'>Perbarui/Input Nilai Sikap</button>";
                     }
                     else
                     {
-                     echo "<button class='btn btn-primary' type='submit' name='input'>Input Nilai</button>";
+                     echo "<button class='btn btn-primary ml-3' type='submit' name='input'>Perbarui/Input Nilai Sikap</button>";
                     }
                     ?>
                   </form>

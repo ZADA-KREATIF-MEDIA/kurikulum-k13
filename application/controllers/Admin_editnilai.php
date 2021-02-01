@@ -965,7 +965,7 @@ public function form_edit_prestasi()
 			$data['page_title'] = '<h1>Update Kehadiran Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['data_kehadiran'] = $data_kehadiran;
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
-			$data['content'] = "guru/v_form_up_kehadiran";
+			$data['content'] = "guru/kehadiran/v_form_up_kehadiran";
 		}
 		$this->load->view('admin/index',$data);
 	}

@@ -773,6 +773,52 @@ function laporan_nilai_siswa($idkelas,$idtahun,$idsms)
 		return true;
 	}
 
+
+	// Kondisi fisik //
+	public function m_get_siswa_kondisi_fisik()
+	{
+		$this->db->select('a.id,a.penglihatan,a.pendengaran,a.gigi,b.nama_siswa')
+			->from('tbl_kondisi_fisik AS a')
+			->join('data_siswa AS b','a.id_siswa=b.id_siswa');
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->result_array();
+		return $data;	
+	}
+	public function m_store_kondisi_fisik($post)
+	{
+		$this->db->insert('tbl_kondisi_fisik', $post);
+        return true;
+	}
+	public function m_get_detail_fisik_siswa($id)
+	{
+		$this->db->select('a.id, a.id_siswa, a.penglihatan, a.pendengaran,a.gigi, b.nama_siswa')
+			->from('tbl_kondisi_fisik AS a')
+			->join('data_siswa AS b','a.id_siswa=b.id_siswa')
+			->where('a.id',$id);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+	}
+	public function m_update_kondisi_fisik($post)
+	{
+		$this->db->select()
+            ->from('tbl_kondisi_fisik')
+            ->where("id", $post['id']);
+        $query = $this->db->set($post)->get_compiled_update();
+        $this->db->query($query);
+        return true;	
+	}
+	public function m_hapus_kondisi_fisik($id)
+	{
+		$this->db->select()
+			->from('tbl_kondisi_fisik')
+			->where("id", $id);
+		$query = $this->db->get_compiled_delete();
+		$this->db->query($query);
+		return true;
+	}
+
+
 	public function m_get_semester_aktif()
 	{
 		$this->db->select('id_semester, semester')
