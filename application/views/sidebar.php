@@ -128,10 +128,7 @@
                 </a>
                 <div class="collapse" id="rapot">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <a class="nav-link text-warning"
-                                href="<?= base_url() ?>cetak/legger_semua?m=pelaporan&sm=legger_semua">Legger Rapot</a>
-                        </li>
+                      
                         <li class="nav-item">
                             <a class="nav-link"
                                 href="<?= base_url() ?>cetak/cetak_rapor?m=pelaporan&sm=cetak_rapor">Cetak Rapot</a>
@@ -243,7 +240,7 @@
             <?php else:?>
             <li class="nav-item nav-category">MENU ORANG TUA</li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="<?= base_url() ?>ortu/nilai_raport" aria-expanded="false" aria-controls="auth">
+                <a class="nav-link"  href="<?= base_url() ?>ortu/nilai_raport" aria-expanded="false" aria-controls="auth">
                     <i class="menu-icon typcn typcn-document-add"></i>
                     <span class="menu-title">Rapot</span>
                 </a>

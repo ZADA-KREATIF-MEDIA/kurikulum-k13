@@ -1,6 +1,6 @@
 <section class="content">
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-12">
             <div class="alert alert-primary" role="alert">
                 <h4 class="box-title text-blue">Data Nilai Sikap Siswa  Kelas <strong><?php echo $nama_kelas;?></strong> </h3>
             </div>
@@ -8,8 +8,8 @@
             <div class="box">
                 <form id="mainform" action="<?php echo base_url('admin_editnilai/proses_input_sikap');?>" method="post"
                     class="form-inline">
-                    <div class="box-body no-padding ">
-                        <table class="table table-bordered table-responsive">
+                    <div class="box-body table-responsive">
+                        <table class="table table-bordered">
                             <tr class="bg-primary text-white">
                                 <th rowspan="2" class="text-center ">No</th>
                                 <th rowspan="2" class="text-center">NIS</th>
@@ -19,7 +19,7 @@
                             </tr>
                             <tr class="bg-dark text-white text-center">
                                 <th class="text-center">Predikat</th>
-                                <th class="text-center">Deskripsi</th>
+                                <th class="text-center" >Deskripsi</th>
                                 <th class="text-center">Predikat</th>
                                 <th class="text-center">Deskripsi</th>
                             </tr>
@@ -49,13 +49,8 @@
 						}
 						?>
                             <tr>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td> </td>
-                                <td></td>
-                                <td>
+                             
+                                <td colspan="7">
                                     <select class="form-control select2" name="idwali" required="">
                                         <option value="">Pilih Wali Kelas</option>
                                         <?php
