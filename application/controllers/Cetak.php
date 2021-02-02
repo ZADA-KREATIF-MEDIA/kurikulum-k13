@@ -137,7 +137,7 @@ class Cetak extends CI_Controller {
 		$data['catatan_wk'] = $this->m_cetak->get_cttnwk($nis,$idkelas,$id_tahun,$semester);
 		$data['wali_kelas'] = $this->m_cetak->get_wk_saat_ini($id_tahun,$idkelas)->row();
 		$data['kepsek'] = $this->m_cetak->get_ref_kepsek($id_tahun,$semester)->row();
-		$data['tinggi_berat'] = $this->m_cetak->get_tinggi_berat($nis);
+		$data['tinggi_berat'] = $this->m_cetak->get_tinggi_berat($post);
 		// print('<pre>');print_r($data['tinggi_berat']);exit();
 		$this->load->view('admin/cetak_rapor/v_hal_nilai_rapor',$data);
 	}

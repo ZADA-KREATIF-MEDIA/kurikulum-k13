@@ -1273,19 +1273,19 @@ public function aksi_input_deskripsi()
 	public function proses_simpan_kehadiran()
 	{
 		$post = $this->input->post();
-
+		print('<pre>');print_r($post);exit();
 		if(isset($post['insert']))
 		{
 			$jumSis = $post['jumlah'];
 			for ($ok=1; $ok<=$jumSis; $ok++)
 			{
-			   $data[$ok]['nis'] = $post['nis'.$ok];
-			   $data[$ok]['id_kelas'] = $post['id_kelas'];
-			   $data[$ok]['id_tahun'] = $post['id_tahun']; 
-			   $data[$ok]['semester'] = $post['semester'];
-			   $data[$ok]['sakit']  = $post['a'.$ok];
-			   $data[$ok]['izin'] = $post['b'.$ok];
-			   $data[$ok]['tnp_ket'] = $post['c'.$ok];
+				$data[$ok]['nis'] = $post['nis'.$ok];
+				$data[$ok]['id_kelas'] = $post['id_kelas'];
+				$data[$ok]['id_tahun'] = $post['id_tahun']; 
+				$data[$ok]['semester'] = $post['semester'];
+				$data[$ok]['sakit']  = $post['a'.$ok];
+				$data[$ok]['izin'] = $post['b'.$ok];
+				$data[$ok]['tnp_ket'] = $post['c'.$ok];
 			   //$data[$ok]['terlambat'] = $post['d'.$ok];
 			   //$data[$ok]['meninggalkan_sek'] = $post['e'.$ok];
 			   //$data[$ok]['tdk_upacara'] = $post['f'.$ok];
@@ -1305,7 +1305,6 @@ public function aksi_input_deskripsi()
 			$jumSis = $post['jumlah'];
 			for ($ok=1; $ok<=$jumSis; $ok++)
 			{
-			   
 				$data = array(
 				   	'sakit' => $post['a'.$ok],
 				    'izin' => $post['b'.$ok],
@@ -1326,6 +1325,7 @@ public function aksi_input_deskripsi()
 					'semester' => $post['semester']
 
 				);
+				print('<pre>');print_r($where);exit();
 				$this->m_guru->update_dataTable($where,$data,'tbl_kehadiran');
 			}
 

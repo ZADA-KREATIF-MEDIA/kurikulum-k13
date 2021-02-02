@@ -468,14 +468,16 @@ function list_deskripsi_nilai($where)
 		return $this->db->get();
 	}
 //===============
-	function get_wali_sesuai($idthn,$idkelas)
+	function get_wali_sesuai($idkelas,$idthn)
 	{
-		$this->db->select('wali.id_wali,guru.nama_guru');
-		$this->db->from('tbl_wali wali');
-		$this->db->join('data_guru guru','guru.id_guru=wali.id_guru');
-		$this->db->where('wali.id_tahun='.$idthn.'');
-		$this->db->where('wali.id_kelas='.$idkelas.'');
-		$this->db->order_by('guru.nama_guru','ASC');
+		$this->db->select('wali.id_wali,guru.nama_guru')
+			->from('tbl_wali wali')
+			->join('data_guru guru','guru.id_guru=wali.id_guru')
+			->where('wali.id_tahun=',$idthn)
+			->where('wali.id_kelas=',$idkelas)
+			->order_by('guru.nama_guru','ASC');
+			// $query = $this->db->get_compiled_select();
+			// print('<pre>');print_r($query);exit();
 		return $this->db->get();
 	}
 

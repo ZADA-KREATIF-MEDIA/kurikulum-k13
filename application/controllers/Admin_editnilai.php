@@ -661,7 +661,6 @@ class Admin_editnilai extends CI_Controller {
 		$data['tahun'] = $this->m_admin->select_table_orderby('tahun ASC','setup_tahun');
 		$data['page_title'] = '<h1>Edit Prestasi Siswa<small>Sort berdasarkan kelas, semester dan tahun ajaran</small></h1>';
 					
-		
 		$data['content'] = "admin/prestasi/v_edit_prestasi";
 		
 		$this->load->view('admin/index',$data);
@@ -670,34 +669,28 @@ class Admin_editnilai extends CI_Controller {
 public function form_edit_prestasi()
 	{
 		$post = $this->input->post();
-		if(isset($post['submit']))
-		{
+		if(isset($post['submit'])) {
 			$idkelas = $post['id_kelas'];
 			$idsemester = $post['id_semester'];
 			$idtahun = $post['id_tahun'];
 
-		$datases = array(
-			'ses_pres_idkelas' => $idkelas,
-			'ses_pres_idsms' => $idsemester,
-			'ses_pres_idthn' => $idtahun
-		);
+			$datases = array(
+				'ses_pres_idkelas' => $idkelas,
+				'ses_pres_idsms' => $idsemester,
+				'ses_pres_idthn' => $idtahun
+			);
 
-		$this->session->set_userdata($datases);
-		}
-		else
-		{
+			$this->session->set_userdata($datases);
+		} else {
 			//cek_session;
 			$sesidkls = $this->session->userdata('ses_pres_idkelas');
 			$sesidsms = $this->session->userdata('ses_pres_idsms');
 			$sesidthn = $this->session->userdata('ses_pres_idthn');
-			if($sesidkls!=''&&$sesidsms!=''&&$sesidthn!='')
-			{
+			if($sesidkls!=''&&$sesidsms!=''&&$sesidthn!=''){
 				$idkelas = $sesidkls;
 				$idsemester = $sesidsms;
 				$idtahun = $sesidthn;
-			}
-			else
-			{
+			} else {
 				redirect('admin_editnilai/edit_prestasi?m=edit_nilai&sm=prestasi');
 			}
 		}
@@ -723,9 +716,9 @@ public function form_edit_prestasi()
 		//refensi from db
 		$data['siswadikelas'] = $this->m_admin->data_siswa_dikelas($idkelas,$idtahun);
 		$data['wali_kelas'] = $this->m_admin->get_wali_sesuai($idkelas,$idtahun);
-	
+		// echo $idkelas.' '.$idtahun.' '.$idsemester;exit();
 		$data['prestasi_siswa'] = $this->m_admin->get_prestasi_siswa($idkelas,$idtahun,$idsemester);
-		
+		// print('<pre>');print_r($data['wali_kelas']->result_array());exit();
 		$data['content'] = "admin/prestasi/v_prestasi_list_siswa";
 		
 		$this->load->view('admin/index',$data);
@@ -741,10 +734,7 @@ public function form_edit_prestasi()
 		if($this->form_validation->run()==FALSE){
 			$this->setmessage(validation_errors(),'warning');
 			redirect('admin_editnilai/form_edit_prestasi?m=edit_nilai&sm=prestasi');
-		}
-		else
-		{
-			
+		} else {
 			$data = array(
 				'nis' => $post['nis'],
 				'id_kelas' => $post['idkelas'],
@@ -771,9 +761,9 @@ public function form_edit_prestasi()
 			$nis = $this->uri->segment(3);
 			$idkelas = $this->uri->segment(4);
 			$geturi5 = explode("-", $this->uri->segment(5));
-				$idwali = $geturi5['0'];
-				$idsemester = $geturi5['1'];
-				$idtahun = $geturi5['2'];
+			$idwali = $geturi5['0'];
+			$idsemester = $geturi5['1'];
+			$idtahun = $geturi5['2'];
 		}
 
 		//tahun ajaran
@@ -795,8 +785,6 @@ public function form_edit_prestasi()
 		$data['page_title'] = '<h1>Update Prestasi Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 		$data['type_form'] = "update";
 		$data['content'] = "admin/prestasi/v_form_input_prestasi";
-		
-			
 
 		$this->load->view('admin/index',$data);
 	}
