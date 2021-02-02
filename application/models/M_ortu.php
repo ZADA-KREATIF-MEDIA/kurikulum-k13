@@ -41,4 +41,58 @@ class M_ortu extends CI_Model
         return $data;
     
     }
+    public function m_get_siswa($id)
+	{
+		$this->db->select()
+            ->from('data_siswa')
+            
+            ->where('id_siswa',$id);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+    }
+    public function m_get_kelas($nis)
+	{
+		$this->db->select()
+            ->from('tbl_ruangan')
+            ->where('nis',$nis);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+    }
+    public function m_get_tahun_aktif()
+	{
+		$this->db->select()
+            ->from('setup_tahun')
+            ->where('status_aktif','1');
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+    }
+    public function m_get_semester_aktif()
+	{
+		$this->db->select()
+            ->from('setup_semester')
+            ->where('status_semester','1');
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+    }
+    public function m_get_data_sekolah()
+	{
+		$this->db->select('*');
+		$this->db->from('info_sekolah');
+		return $this->db->get();
+    }
+    public function m_get_tinggi_berat($nis)
+	{
+		$this->db->select()
+            ->from('tbl_berat_tinggi')
+            
+            ->where('id_siswa',$nis);
+		$query = $this->db->get_compiled_select();
+		$data = $this->db->query($query)->row_array();
+		return $data;
+    }
+
 }
