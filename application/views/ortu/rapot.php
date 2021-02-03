@@ -90,20 +90,6 @@
                     readonly>
             </div>
             <div class="form-group col-md-12 col-sm-12">
-                <label for="kelas">Diterima di Kelas</label>
-                <select name="kelas" class="form-control" disabled>
-                    <?php foreach($kelas as $kls): ?>
-                    <option value="<?= $kls['id_kelas'] ?>" <?php if($siswa['kelas'] == $kls['id_kelas'])?>>
-                        <?= $kls['nama_kelas'] ?></option>
-                    <?php endforeach;?>
-                </select>
-            </div>
-            <div class="form-group col-md-12 col-sm-12">
-                <label for="tgl_diterima">Diterima Tanggal</label>
-                <input type="date" class="form-control" name="diterima_tgl" value="<?= $siswa['diterima_tanggal'] ?>"
-                    readonly>
-            </div>
-            <div class="form-group col-md-12 col-sm-12">
                 <label for="ayah">Nama Ayah</label>
                 <input type="text" class="form-control" name="nama_ayah" value="<?= $siswa['nama_ayah'] ?>" readonly>
             </div>

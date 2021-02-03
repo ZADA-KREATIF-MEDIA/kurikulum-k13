@@ -41,7 +41,7 @@
 							<input type="hidden" name="id_kelas" value="<?php echo $id_kelas;?>" />
 							<input type="hidden" name="id_tahun" value="<?php echo $idtahun;?>" />	 
 							<input type="hidden" name="semester" value="<?php echo $idsemester;?>" />
-							<input type='hidden' name='nis".$ok."' value="<?= $row['nis'] ?>" >
+							<input type='hidden' name='nis<?=$ok?>' value="<?= $row['nis'] ?>" >
 						<tr>
 							<td><center><?php echo $ok;?></center></td>
 							<td><?php echo $row['nis'];?> </td>

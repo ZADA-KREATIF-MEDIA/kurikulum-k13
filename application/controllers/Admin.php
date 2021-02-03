@@ -274,7 +274,6 @@ class Admin extends CI_Controller
     {
 		$id = $this->uri->segment(3);
 		$data['kelas'] = $this->m_admin->get_detail_kelas($id);
-		
         $data['content'] = "admin/kelas/v_edit_kelas";
         $this->load->view('admin/index', $data);
     }
@@ -522,21 +521,16 @@ class Admin extends CI_Controller
         $data['tahun_ajaran'] = $this->m_admin->select_table_orderby('tahun ASC', 'setup_tahun');
         $data['pd_tahun'] = $this->m_admin->select_dataWhere('id_tahun=' . $this->input->post('idtahun') . '', 'setup_tahun')->row('tahun');
         $data['id_tahun'] = $this->input->post('idtahun');
-
         //------------------
         $where = array(
             'id_tahun' => trim($this->input->post('idtahun')),
             'kategori_kls' => trim($this->input->post('kategori_kls')),
         );
         $cektabel = $this->m_admin->select_dataWhere($where, 'tbl_kkm')->num_rows();
-
         if ($cektabel > 0) {
             $post = $this->input->post();
-            $data['tbl_kkm'] = $this->m_admin->select_tbl_kkm($post['idtahun'], $post['kategori_kls']);
-
-            $data['mapel_notset'] = $this->m_admin->select_mapel_notset_kkm($post['idtahun'], $post['kategori_kls']);
-
-            $data['kategori_kls'] = $post['kategori_kls'];
+            $data['tbl_kkm'] = $this->m_admin->select_tbl_kkm($post['idtahun']);
+            $data['mapel_notset'] = $this->m_admin->select_mapel_notset_kkm($post['idtahun']);
             $data['type_form'] = "update";
         } else {
             $post = $this->input->post();
@@ -544,9 +538,7 @@ class Admin extends CI_Controller
             $data['type_form'] = "input";
             $data['kategori_kls'] = trim($this->input->post('kategori_kls'));
         }
-
         $data['content'] = "admin/kkm/v_setup_kkm";
-
         $this->load->view('admin/index', $data);
     }
 
@@ -1116,7 +1108,7 @@ class Admin extends CI_Controller
         $type = "tanpa_where";
         include "pagination_config.php";
         //end Pagination::
-        $data['content'] = "admin/v_data_guru";
+        $data['content'] = "admin/guru/v_data_guru";
         $this->load->view('admin/index', $data);
     }
 
@@ -1206,22 +1198,16 @@ class Admin extends CI_Controller
         }
     }
 
-    //-->> Multi Action <<--
     public function aksi_guru()
     {
         $post = $this->input->post();
-
         if (isset($post['multidelete'])) {
             $check = $post['check'];
             $jml = count($check);
             if (isset($check)) {
-
-                //menghapus data di database
                 $cols = "id_guru";
                 $this->m_admin->del_selected_data($post, 'data_guru', $cols);
-
                 $this->setmessage('Berhasil menghapus ' . $jml . ' data guru.', 'success');
-
                 redirect('admin/data_guru?m=data_induk&sm=guru');
             } else {
                 $this->setmessage('Tidak ada data yang dipilih!', 'warning');
@@ -1329,13 +1315,12 @@ class Admin extends CI_Controller
     {
         $where = array('id_guru' => $this->uri->segment(3));
         $data['data_guru'] = $this->m_admin->select_dataWhere($where, 'data_guru');
-
         $id_admin = $this->session->userdata('id');
         $where = array('id_admin' => $id_admin);
         $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
         $data['page_title'] = "<h1>Edit Data<small>melakukan perubahan data guru</small></h1>";
         //$data['tipe_form'] = "multi";
-        $data['content'] = "admin/v_edit_guru";
+        $data['content'] = "admin/guru/v_edit_guru";
         $this->load->view('admin/index', $data);
     }
 
@@ -1343,11 +1328,8 @@ class Admin extends CI_Controller
     {
         $where = array('id_guru' => $this->uri->segment(3));
         $this->m_admin->delete_dataTable($where, 'data_guru');
-
         $this->setmessage('Berhasil menghapus data guru', 'success');
-
         redirect('admin/data_guru?m=data_induk&sm=guru');
-
     }
 
     /*public function reset_pass_guru()
@@ -1394,7 +1376,7 @@ class Admin extends CI_Controller
     |=================================================================================
     | 10) BAGIAN DATA INDUK - SISWA
     |=================================================================================
-     */
+    */
 
     public function data_siswa()
     {
@@ -1408,7 +1390,6 @@ class Admin extends CI_Controller
         } elseif ($this->session->userdata('ses_stat_siswa') != '') {
             $status_siswa = $this->session->userdata('ses_stat_siswa');
             $jml_hlm = $this->session->userdata('ses_siswa_rows');
-
         } else {
             //Default:
             $jml_hlm = 5;
@@ -1601,8 +1582,6 @@ class Admin extends CI_Controller
             redirect('admin/data_siswa');
         }
     }
-
-  
 
     public function detail_siswa()
     {
@@ -1868,7 +1847,6 @@ class Admin extends CI_Controller
         } elseif ($this->session->userdata('ses_stat_siswa') != '') {
             $status_siswa = $this->session->userdata('ses_stat_siswa');
             $jml_hlm = $this->session->userdata('ses_siswa_rows');
-
         } else {
             //Default:
             $jml_hlm = 5;
@@ -1897,7 +1875,6 @@ class Admin extends CI_Controller
             //Default:
             $per_hlm = 5;
             $kelas = $this->m_admin->select_data('id_kelas', 'id_kelas ASC', 'setup_kelas', 1)->row();
-
             $id_kelas = $kelas->id_kelas;
             $where = array('status_aktif' => 1);
             $setup_tahun = $this->m_admin->select_dataWhere($where, 'setup_tahun')->row();
@@ -1953,7 +1930,6 @@ class Admin extends CI_Controller
         $id_admin = $this->session->userdata('id');
         $where = array('id_admin' => $id_admin);
         $data['user'] = $this->m_admin->select_dataWhere($where, 'user_admin');
-      
 
         //Data Referensi Seluruh Siswa::>>
         //hanya menampilkan siswa yang belum memiliki kelas
@@ -1987,11 +1963,7 @@ class Admin extends CI_Controller
             $post = $this->input->post();
             $check = $post['check'];
             $jml = count($check);
-
             if (isset($check)) {
-
-                //Memeriksa apakah ditemukan data double::
-
                 $cek_data = $this->m_admin->select_pembagian_kelas($post)->num_rows();
 
                 if ($cek_data > 0) {
@@ -2014,23 +1986,16 @@ class Admin extends CI_Controller
             $post = $this->input->post();
             $check = $post['check'];
             $jml = count($check);
-
             if (isset($check)) {
-
-                //Memeriksa apakah ditemukan data double::
-
                 $cek_data = $this->m_admin->select_pembagian_kelas($post)->num_rows();
-
                 if ($cek_data > 0) {
                     $this->setmessage('Tidak dapat memproses data. Ini terjadi karena system menemukan data yang dianggap sama!', 'danger');
                     redirect('admin/jadwal_ruangkelas');
                 } else {
                     $this->m_admin->set_pembagian_kelas($post);
-
                     $this->setmessage($jml . ' data berhasil diperbarui!', 'success');
                     redirect('admin/jadwal_ruangkelas');
                 }
-
             } else {
                 $this->setmessage('Tidak ada data yang terpilih!', 'warning');
                 redirect('admin/jadwal_ruangkelas');
@@ -2066,8 +2031,6 @@ class Admin extends CI_Controller
 
     public function jadwal_guru()
     {
-       
-
         //Filtering data jadwal guru mengajar::
         if (isset($_POST['sort_jadwal_mengajar'])) {
             $id_kelas = trim($this->input->post('kelas'));

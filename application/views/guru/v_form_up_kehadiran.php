@@ -1,4 +1,3 @@
-<!-- end page-heading -->
 <section class="content">
 	<div class="row">
 		<div class="col-md-12">
@@ -10,12 +9,12 @@
             <div class="box">
                 <div class="box-header">
 					<h3 class="box-title">Kelas  <?php echo $kelas->row('nama_kelas'); ?>, Semester <b><?php echo $semester_aktif; ?></b></h3>
-                </div><!-- /.box-header -->
+                </div>
                 <div class="box-body table-responsive no-padding">
             		<table  class="table table-hover table-bordered">
 						<thead>
 							<tr class="bg-secondary">
-								<th rowspan=2>No. <?php echo $id_kelas;?></th>
+								<th rowspan=2>No.<?php echo $id_kelas;?></th>
 								<th rowspan=2>Nis</th>
 								<th rowspan=2>Nama</th>
 								<th colspan=6  valign=top>Ketidakhadiran <h6 small>S=sakit, I=ijin, TK=tanpa keterangan</h6></th>

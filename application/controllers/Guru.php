@@ -1260,8 +1260,7 @@ public function aksi_input_deskripsi()
 			$data['data_kehadiran'] = $this->m_guru->get_siswa_bkhadir($post_idkelas,$post_idtahun);
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
 			$data['content'] = "guru/kehadiran/v_form_kehadiran";
-		}elseif(isset($_POST['update']))
-		{
+		}elseif(isset($_POST['update'])){
 			$data['page_title'] = '<h1>Update Kehadiran Siswa '.$setup_tahun->tahun.' Semester '.$data['semester_aktif'].'</h1>';
 			$data['data_kehadiran'] = $this->m_guru->get_data_bkhadir($post_idkelas,$post_idtahun,$post_semester);
 			$data['jumSis'] = $data['data_kehadiran']->num_rows();
@@ -1273,7 +1272,6 @@ public function aksi_input_deskripsi()
 	public function proses_simpan_kehadiran()
 	{
 		$post = $this->input->post();
-		print('<pre>');print_r($post);exit();
 		if(isset($post['insert']))
 		{
 			$jumSis = $post['jumlah'];
@@ -1325,7 +1323,7 @@ public function aksi_input_deskripsi()
 					'semester' => $post['semester']
 
 				);
-				print('<pre>');print_r($where);exit();
+				
 				$this->m_guru->update_dataTable($where,$data,'tbl_kehadiran');
 			}
 

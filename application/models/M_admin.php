@@ -368,18 +368,18 @@ function get_list_mapel()
 	return $this->db->get();
 }
 
-function select_mapel_notset_kkm($idthn,$katkel)
+function select_mapel_notset_kkm($idthn)
 {
-	$sql = "SELECT * FROM setup_pelajaran WHERE id_pelajaran NOT IN (SELECT id_pelajaran FROM tbl_kkm WHERE id_tahun=? AND kategori_kls=?)";
-	return $this->db->query($sql,array($idthn,$katkel));
+	$sql = "SELECT * FROM setup_pelajaran WHERE id_pelajaran NOT IN (SELECT id_pelajaran FROM tbl_kkm WHERE id_tahun='$idthn')";
+	return $this->db->query($sql,array($idthn));
 }
 
-function select_tbl_kkm($idthn,$kat_kls)
+function select_tbl_kkm($idthn)
 {
 	$this->db->select('kkm.id_kkm,kkm.id_tahun,kkm.id_pelajaran,pelajaran.nama_pelajaran,kkm.kategori_kls,kkm.kkm');
 	$this->db->from('tbl_kkm kkm');
 	$this->db->join('setup_pelajaran pelajaran','kkm.id_pelajaran=pelajaran.id_pelajaran','right');
-	$this->db->where("kkm.id_tahun=$idthn AND kkm.kategori_kls='$kat_kls'");
+	$this->db->where("kkm.id_tahun=$idthn");
 	return $this->db->get();
 }
 

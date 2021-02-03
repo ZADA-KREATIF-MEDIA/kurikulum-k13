@@ -86,11 +86,17 @@ class M_ortu extends CI_Model
     }
     public function m_get_tinggi_berat($nis)
 	{
+        $this->db->select('id_siswa')
+            ->from('data_siswa')
+            ->where('nis',$nis);
+        $query = $this->db->get_compiled_select();
+        $data_mhs = $this->db->query($query)->row_array();
+        
 		$this->db->select()
             ->from('tbl_berat_tinggi')
-            
-            ->where('id_siswa',$nis);
-		$query = $this->db->get_compiled_select();
+            ->where('id_siswa',$data_mhs['id_siswa']);
+        $query = $this->db->get_compiled_select();
+        // print('<pre>');print_r($query);exit();
 		$data = $this->db->query($query)->row_array();
 		return $data;
     }
