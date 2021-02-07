@@ -6,7 +6,7 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              Selamat Datang <?= strtoupper($this->session->userdata('nama')) ?>
+              Selamat Datang Kembali Saudara/Saudari <?= strtoupper($this->session->userdata('nama')) ?>
             </div>
           </div>
         </div>

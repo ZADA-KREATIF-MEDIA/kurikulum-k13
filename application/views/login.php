@@ -3,32 +3,34 @@
         <div class="row w-100">
             <div class="col-lg-4 mx-auto">
                 <div class="auto-form-wrapper ">
-                <div class="text-center">
-                <h2>E-RAPORT</h2>
-                <h3>SD SANTA MARIA TIMIKA</h3>
-                </div>
-                <br>
+                    <div class="text-center">
+                        <h2>E-RAPORT</h2>
+                        <h3>SD SANTA MARIA TIMIKA</h3>
+                    </div>
+                    <br>
                     <?php echo $this->session->flashdata('notif'); ?>
                     <form action="<?php echo base_url('login/aksi_login');?>" method="POST">
                         <div class="form-group">
                             <label class="label">Username</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Username" name="username" id="username">
+                                <input type="text" class="form-control" placeholder="Username" name="username"
+                                    id="username">
                                 <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="mdi mdi-check-circle-outline"></i>
-                                </span>
+                                    <span class="input-group-text">
+                                        <i class="mdi mdi-check-circle-outline"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="label">Password</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" placeholder="*********" name="password" id="password">
+                                <input type="password" class="form-control" placeholder="*********" name="password"
+                                    id="password">
                                 <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="mdi mdi-check-circle-outline"></i>
-                                </span>
+                                    <span class="input-group-text">
+                                        <i class="mdi mdi-check-circle-outline"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
