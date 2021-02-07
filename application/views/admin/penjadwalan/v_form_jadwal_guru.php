@@ -2,7 +2,6 @@
     <div class="box-header with-border">
     <h4>FORM PENAMBAHAN JADWAL GURU</h4>
         <hr>
-       
     </div>
     <div class="box-body">
         <form action="<?php echo base_url('admin/set_jadwal_guru');?>" method="post" class="form-horizontal"

@@ -17,9 +17,9 @@ class Guru extends CI_Controller {
 		|Periksa Session Login
 		|------------------------------------------------------
 		*/
-		if($this->session->userdata('status') != "guru"){
-			redirect('login');
-		}
+		// if($this->session->userdata('status') != "guru" || $this->session->userdata('status') != "wali"){
+		// 	redirect('login');
+		// }
 
 	}
 
@@ -402,8 +402,7 @@ class Guru extends CI_Controller {
 		$where_kelas = array('id_kelas' => $id_kelas, 'id_tahun' => $setup_tahun->id_tahun);
 		$cek_kelas = $this->m_guru->select_dataWhere($where_kelas,'tbl_ruangan')->num_rows();
 		//Jika ada siswa dikelas...
-		if($cek_kelas>0)
-		{
+		if($cek_kelas>0){
 			$where = array(
 				'id_guru' => $id_guru,
 				'id_kelas' => $id_kelas,
@@ -1696,5 +1695,79 @@ public function setmessage($message,$label)
         $this->m_guru->m_hapus_kondisi_fisik($id);
         $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
         redirect('guru/kondisi_fisik');
+	}
+	
+/*---------- Tinggi dan Berat ----------*/
+	public function tinggi_berat()
+	{
+		$data['siswa']   = $this->m_guru->m_get_siswa_tinggi_berat(); 
+		// print('<pre>');print_r($data);exit();
+		$data['content'] = "guru/berat_tinggi/v_setup_berat_tinggi";
+		$this->load->view('guru/index', $data);
+	}
+
+	public function tambah_berat_tinggi()
+    {
+        $data['siswa']      = $this->m_guru->m_get_siswa();
+        $data['semester']   = $this->m_guru->m_get_semester_aktif();
+        $data['tahun']      = $this->m_guru->m_get_tahun_aktif();
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "guru/berat_tinggi/v_tambah_berat_tinggi";
+        $this->load->view('guru/index', $data);
+    }
+
+
+    public function store_berat_tinggi()
+    {
+        $this->form_validation->set_rules('nama_siswa', 'Nama Siswa', 'required');
+        if ($this->form_validation->run() == false ) {
+            // echo "here";exit();
+            $this->session->set_flashdata('sukses', '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Gagal</h4> Data siswa sudah di masukkan </div>');
+            redirect('guru/tambah_berat_tinggi');
+        } else {
+            $post = [
+                'id_siswa'      => $this->input->post('nama_siswa',true),
+                'berat_badan'   => $this->input->post('berat',true),
+                'tinggi_badan'  => $this->input->post('tinggi',true),
+                'id_semester'   => $this->input->post('semester',true),
+                'id_tahun'      => $this->input->post('tahun',true) 
+            ];
+            $this->m_guru->m_store_berat_tinggi($post);
+            $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Menambah Data </div>');
+            redirect('guru/tinggi_berat');
+        }
+    }
+
+    public function edit_berat_tinggi()
+    {
+        $id = $this->uri->segment(3);
+        $data['siswa']  = $this->m_guru->m_get_detail_siswa($id);
+        $data['semester']   = $this->m_guru->m_get_semester_aktif();
+        $data['tahun']      = $this->m_guru->m_get_tahun_aktif();
+        // print('<pre>');print_r($data);exit();
+        $data['content'] = "guru/berat_tinggi/v_edit_berat_tinggi";
+        $this->load->view('guru/index', $data);
+    }
+
+    public function update_berat_tinggi()
+    {
+        $post = [
+            'id'            => $this->input->post('id_siswa',true),
+            'berat_badan'   => $this->input->post('berat',true),
+            'tinggi_badan'  => $this->input->post('tinggi',true),
+            'id_semester'   => $this->input->post('semester',true),
+            'id_tahun'      => $this->input->post('tahun',true)
+        ];
+        $this->m_guru->m_update_berat_tinggi($post);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Update Data </div>');
+        redirect('guru/tinggi_berat');
+    }
+
+    public function hapus_berat_tinggi()
+    {
+        $id = $this->uri->segment(3);
+        $this->m_guru->m_hapus_berat_tinggal($id);
+        $this->session->set_flashdata('sukses', '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="fa fa-check-circle"></i> Sukses</h4> Hapus Data </div>');
+        redirect('guru/tinggi_berat');
     }
 }

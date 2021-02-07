@@ -147,6 +147,7 @@ class M_cetak extends CI_Model{
 			->where('id_semester', $post['semester'])
 			->where('id_tahun',$post['id_tahun']);
 		$query = $this->db->get_compiled_select();
+		// print('<pre>');print_r($query);exit();
 		$data = $this->db->query($query)->row_array();
 		return $data;
 	}

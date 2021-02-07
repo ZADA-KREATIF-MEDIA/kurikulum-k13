@@ -690,8 +690,13 @@ $set_header .= "</tbody></table><br>";
         <td width="200px">Tinggi</td>
       </tr>
       <tr>
+      <?php if($tinggi_berat == ""):?>
+        <td>-</td>
+        <td>-</td>
+      <?php else:?>
         <td><?= $tinggi_berat['berat_badan'] ."cm"?></td>
         <td><?= $tinggi_berat['tinggi_badan'] ."kg"?></td>
+      <?php endif;?>
       </tr>
 
     </tbody>
@@ -745,12 +750,12 @@ $set_header .= "</tbody></table><br>";
           Mengetahui<br>
           Kepala Sekolah
           <br><br><br><br><br><br>
-          <b><?php echo $kepsek->nama_guru; ?></b><br>
-          NBM <?php echo $kepsek->nip; ?>
+          <b>Huberta Rumangun, S.Ag</b><br>
+          NBM 4561
 
         </td>
 
-        <td width="33%"><?php echo strip_tags($kepsek->tgl_rapor); ?><br>
+        <td width="33%"><?php echo strip_tags(date('d-M-Y')); ?><br>
           Wali Kelas,
           <br><br><br><br><br><br>
           <b><?php echo strip_tags($wali_kelas->nama_guru); ?></b><br>

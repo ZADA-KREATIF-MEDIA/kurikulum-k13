@@ -88,17 +88,24 @@ class Login extends CI_Controller {
 
 			$cek = $this->m_login->cek_login('data_guru',$where)->num_rows();
 			$row = $this->m_login->cek_login('data_guru',$where)->row();
-
+			$cek_wali = $this->m_login->cek_wali($row->id_guru);
 			if($cek > 0){
-
-				$data_session = array(
-					'id' => $row->id_guru,
-					'nama' => $row->nama_guru,
-					'status' => "guru",
-					'waktu' => date('d-m-Y H:i:s')
-					);
+				if($cek_wali > 0){
+					$data_session = array(
+						'id' => $row->id_guru,
+						'nama' => $row->nama_guru,
+						'status' => "wali",
+						'waktu' => date('d-m-Y H:i:s')
+						);
+				}else{
+					$data_session = array(
+						'id' => $row->id_guru,
+						'nama' => $row->nama_guru,
+						'status' => "guru",
+						'waktu' => date('d-m-Y H:i:s')
+						);
+				}
 				$this->session->set_userdata($data_session);
-
 				redirect('guru?m=dashboard');
 			}else{
 

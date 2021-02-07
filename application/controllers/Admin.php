@@ -2512,9 +2512,10 @@ class Admin extends CI_Controller
 
     public function form_tambah_guru()
     {
-        $data['content'] = "admin/v_data_guru_tambah";
+        $data['content'] = "admin/guru/v_data_guru_tambah";
         $this->load->view('admin/index', $data);
     }
+    
     public function form_tambah_walikelas()
     {
         //Filtering data wali kelas::
@@ -2663,7 +2664,6 @@ class Admin extends CI_Controller
         $data['siswa']      = $this->m_admin->m_get_siswa();
         $data['semester']   = $this->m_admin->m_get_semester_aktif();
         $data['tahun']      = $this->m_admin->m_get_tahun_aktif();
-        // print('<pre>');print_r($data);exit();
         $data['content'] = "admin/berat_tinggi/v_tambah_berat_tinggi";
         $this->load->view('admin/index', $data);
     }
