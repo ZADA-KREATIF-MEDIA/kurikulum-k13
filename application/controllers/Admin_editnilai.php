@@ -3,23 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin_editnilai extends CI_Controller {
 
-	/*
-	| -----------------------------------------------------------------------
-	| SINO 2018 - COPYRIGHTS - WATULINTANG.COM
-	| DAFTAR PROGRAM PADA CLASS Admin
-	| -----------------------------------------------------------------------
-	*/
+	
 
 	function __construct(){
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('m_admin');
 		$this->load->library('pagination');
-		/*
-		|-----------------------------------------------------
-		|Periksa Session Login
-		|------------------------------------------------------
-		*/
+		
 
 		if($this->session->userdata('status') != "admin"){
 			redirect('login');

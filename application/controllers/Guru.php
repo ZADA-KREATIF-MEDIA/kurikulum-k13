@@ -12,14 +12,7 @@ class Guru extends CI_Controller {
 		$this->load->model('m_admin');
 		$this->load->model('m_cetak');
 		$this->load->library('pagination');
-		/*
-		|-----------------------------------------------------
-		|Periksa Session Login
-		|------------------------------------------------------
-		*/
-		// if($this->session->userdata('status') != "guru" || $this->session->userdata('status') != "wali"){
-		// 	redirect('login');
-		// }
+		
 
 	}
 
