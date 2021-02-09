@@ -115,9 +115,6 @@
                         </span>
                         <span class='description'>Admin system - 7:30 PM today</span>
                       </div><!-- /.user-block -->
-                      <p>
-                        Selamat datang bapak/Ibu Guru SMA Muhammadiyah 3 Yogyakarta, selamat datang di sistem pengisian nilai siswa, sialhkan manfaatkan sebagaimana mestinya. Sistem ini masih dalam pengembangan dan penyempurnaan. Sementara guru hanya dapat melakukan entry nilai. Untuk mengisi komentar,kritik saran atau pesan masuk dari wali murid belum bisa dijalankan karena fitur memang belum diaktifkan. Jangan segan kontak admin jika ada kesalahan sistem atau kesulitan dalam pengentryan nilai. <br> Terimakasih :)
-                      </p>
                       <ul class="list-inline">
                         <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
                         <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a></li>
