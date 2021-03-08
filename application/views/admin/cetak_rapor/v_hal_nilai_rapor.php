@@ -108,64 +108,32 @@ $set_header .= "</tbody></table><br>";
       $noA = 1;
       foreach ($nilai_rapor->result() as $rownilai) {
         if ($rownilai->id_kat_mapel == 1) {
-          
+
       ?>
-            <!-- Cek Apakah ini Mapel Utama?? -->
+          <!-- Cek Apakah ini Mapel Utama?? -->
 
-            <tr>
-              <td align="center" valign="middle"><?php echo $noA++; ?></td>
+          <tr>
+            <td align="center" valign="middle"><?php echo $noA++; ?></td>
 
-              <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
-              <td align="center" valign="middle"><?php echo $rownilai->nilai_pengetahuan; ?></td>
-              <td align="center" valign="middle">
-                <?php if ($rownilai->nilai_pengetahuan < 73) {
-                  echo "D";
-                } elseif ($rownilai->nilai_pengetahuan >= 73 && $rownilai->nilai_pengetahuan <= 81) {
-                  echo "C";
-                } elseif ($rownilai->nilai_pengetahuan >= 82 && $rownilai->nilai_pengetahuan <= 90) {
-                  echo "B";
-                } elseif ($rownilai->nilai_pengetahuan >= 91 && $rownilai->nilai_pengetahuan <= 100) {
-                  echo "A";
-                }
-                ?></td>
-              <td valign="middle"><?php echo $rownilai->pengetahuan; ?></td>
-            </tr>
-            <!-- Cek Apakah ada sub Mapel -->
-
-            <?php
-            //perulangan nilai;;;
-            //Untuk penomoran sub mapel, memanfaatkan pengkodean ASSCI (Karakter ASCII Huruf) <---
-            $s = 'a';
-
-            foreach ($nilai_rapor->result() as $subrownilai) {
-              ?>
-                <tr>
-                  <td align="center" valign="middle"></td>
-
-                  <td align="left" valign="middle"><?php echo "$s. " . ucwords($subrownilai->nama_pelajaran); ?></td>
-                  <?php $s = chr(ord($s) + 1); //Kode ASCII huruf<<--
-                  ?>
-                  <td align="center" valign="middle"><?php echo $subrownilai->nilai_pengetahuan; ?></td>
-                  <td align="center" valign="middle">
-                    <?php if ($subrownilai->nilai_pengetahuan < 73) {
-                      echo "D";
-                    } elseif ($subrownilai->nilai_pengetahuan >= 73 && $subrownilai->nilai_pengetahuan <= 81) {
-                      echo "C";
-                    } elseif ($subrownilai->nilai_pengetahuan >= 82 && $subrownilai->nilai_pengetahuan <= 90) {
-                      echo "B";
-                    } elseif ($subrownilai->nilai_pengetahuan >= 91 && $subrownilai->nilai_pengetahuan <= 100) {
-                      echo "A";
-                    }
-                    ?></td>
-                  <td valign="middle"><?php echo $subrownilai->pengetahuan; ?></td>
-                </tr>
+            <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
+            <td align="center" valign="middle"><?php echo $rownilai->nilai_pengetahuan; ?></td>
+            <td align="center" valign="middle">
+              <?php if ($rownilai->nilai_pengetahuan < 73) {
+                echo "D";
+              } elseif ($rownilai->nilai_pengetahuan >= 73 && $rownilai->nilai_pengetahuan <= 81) {
+                echo "C";
+              } elseif ($rownilai->nilai_pengetahuan >= 82 && $rownilai->nilai_pengetahuan <= 90) {
+                echo "B";
+              } elseif ($rownilai->nilai_pengetahuan >= 91 && $rownilai->nilai_pengetahuan <= 100) {
+                echo "A";
+              }
+              ?></td>
+            <td valign="middle"><?php echo $rownilai->pengetahuan; ?></td>
+          </tr>
+          <!-- Cek Apakah ada sub Mapel -->
       <?php
-              
-            }
-          
         }
       }
-
       //$noA = $no++;
       ?>
 
@@ -264,59 +232,28 @@ $set_header .= "</tbody></table><br>";
       foreach ($nilai_rapor->result() as $rownilai) {
         if ($rownilai->id_kat_mapel == 1) {
       ?>
-            <!-- Cek Apakah ini Mapel Utama?? -->
+          <!-- Cek Apakah ini Mapel Utama?? -->
 
-            <tr>
-              <td align="center" valign="middle"><?php echo $noE++; ?></td>
+          <tr>
+            <td align="center" valign="middle"><?php echo $noE++; ?></td>
 
-              <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
-              <td align="center" valign="middle"><?php echo $rownilai->nilai_ketrampilan; ?></td>
-              <td align="center" valign="middle">
-                <?php if ($rownilai->nilai_ketrampilan < 73) {
-                  echo "D";
-                } elseif ($rownilai->nilai_ketrampilan >= 73 && $rownilai->nilai_ketrampilan <= 81) {
-                  echo "C";
-                } elseif ($rownilai->nilai_ketrampilan >= 82 && $rownilai->nilai_ketrampilan <= 90) {
-                  echo "B";
-                } elseif ($rownilai->nilai_ketrampilan >= 91 && $rownilai->nilai_ketrampilan <= 100) {
-                  echo "A";
-                }
-                ?></td>
-              <td valign="middle"><?php echo $rownilai->ketrampilan; ?></td>
-            </tr>
-            <!-- Cek Apakah ada sub Mapel -->
-
-            <?php
-            //perulangan nilai;;;
-            //Untuk penomoran sub mapel, memanfaatkan pengkodean ASSCI (Karakter ASCII Huruf) <---
-            $s11 = 'a';
-
-            foreach ($nilai_rapor->result() as $subrownilai) {
-             ?>
-                <tr>
-                  <td align="center" valign="middle"></td>
-
-                  <td align="left" valign="middle"><?php echo "$s11. " . ucwords($subrownilai->nama_pelajaran); ?></td>
-                  <?php $s11 = chr(ord($s11) + 1); //Kode ASCII huruf<<--
-                  ?>
-                  <td align="center" valign="middle"><?php echo $subrownilai->nilai_ketrampilan; ?></td>
-                  <td align="center" valign="middle">
-                    <?php if ($subrownilai->nilai_ketrampilan < 73) {
-                      echo "D";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 73 && $subrownilai->nilai_ketrampilan <= 81) {
-                      echo "C";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 82 && $subrownilai->nilai_ketrampilan <= 90) {
-                      echo "B";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 91 && $subrownilai->nilai_ketrampilan <= 100) {
-                      echo "A";
-                    }
-                    ?></td>
-                  <td valign="middle"><?php echo $subrownilai->ketrampilan; ?></td>
-                </tr>
+            <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
+            <td align="center" valign="middle"><?php echo $rownilai->nilai_ketrampilan; ?></td>
+            <td align="center" valign="middle">
+              <?php if ($rownilai->nilai_ketrampilan < 73) {
+                echo "D";
+              } elseif ($rownilai->nilai_ketrampilan >= 73 && $rownilai->nilai_ketrampilan <= 81) {
+                echo "C";
+              } elseif ($rownilai->nilai_ketrampilan >= 82 && $rownilai->nilai_ketrampilan <= 90) {
+                echo "B";
+              } elseif ($rownilai->nilai_ketrampilan >= 91 && $rownilai->nilai_ketrampilan <= 100) {
+                echo "A";
+              }
+              ?></td>
+            <td valign="middle"><?php echo $rownilai->ketrampilan; ?></td>
+          </tr>
+          <!-- Cek Apakah ada sub Mapel -->
       <?php
-              
-            }
-          
         }
       }
 
@@ -401,59 +338,58 @@ $set_header .= "</tbody></table><br>";
       foreach ($nilai_rapor->result() as $rownilai) {
         if ($rownilai->id_kat_mapel == 3) {
       ?>
-            <!-- Cek Apakah ini Mapel Utama?? -->
+          <!-- Cek Apakah ini Mapel Utama?? -->
 
+          <tr>
+            <td align="center" valign="middle"><?php echo $noG++; ?></td>
+
+            <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
+            <td align="center" valign="middle"><?php echo $rownilai->nilai_ketrampilan; ?></td>
+            <td align="center" valign="middle">
+              <?php if ($rownilai->nilai_ketrampilan < 73) {
+                echo "D";
+              } elseif ($rownilai->nilai_ketrampilan >= 73 && $rownilai->nilai_ketrampilan <= 81) {
+                echo "C";
+              } elseif ($rownilai->nilai_ketrampilan >= 82 && $rownilai->nilai_ketrampilan <= 90) {
+                echo "B";
+              } elseif ($rownilai->nilai_ketrampilan >= 91 && $rownilai->nilai_ketrampilan <= 100) {
+                echo "A";
+              }
+              ?></td>
+            <td valign="middle"><?php echo $rownilai->ketrampilan; ?></td>
+          </tr>
+          <!-- Cek Apakah ada sub Mapel -->
+
+          <?php
+          //perulangan nilai;;;
+          //Untuk penomoran sub mapel, memanfaatkan pengkodean ASSCI (Karakter ASCII Huruf) <---
+          $s13 = 'a';
+
+          foreach ($nilai_rapor->result() as $subrownilai) {
+          ?>
             <tr>
-              <td align="center" valign="middle"><?php echo $noG++; ?></td>
+              <td align="center" valign="middle"></td>
 
-              <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
-              <td align="center" valign="middle"><?php echo $rownilai->nilai_ketrampilan; ?></td>
+              <td align="left" valign="middle"><?php echo "$s13. " . ucwords($subrownilai->nama_pelajaran); ?></td>
+              <?php $s13 = chr(ord($s13) + 1); //Kode ASCII huruf<<--
+              ?>
+              <td align="center" valign="middle"><?php echo $subrownilai->nilai_ketrampilan; ?></td>
               <td align="center" valign="middle">
-                <?php if ($rownilai->nilai_ketrampilan < 73) {
+                <?php if ($subrownilai->nilai_ketrampilan < 73) {
                   echo "D";
-                } elseif ($rownilai->nilai_ketrampilan >= 73 && $rownilai->nilai_ketrampilan <= 81) {
+                } elseif ($subrownilai->nilai_ketrampilan >= 73 && $subrownilai->nilai_ketrampilan <= 81) {
                   echo "C";
-                } elseif ($rownilai->nilai_ketrampilan >= 82 && $rownilai->nilai_ketrampilan <= 90) {
+                } elseif ($subrownilai->nilai_ketrampilan >= 82 && $subrownilai->nilai_ketrampilan <= 90) {
                   echo "B";
-                } elseif ($rownilai->nilai_ketrampilan >= 91 && $rownilai->nilai_ketrampilan <= 100) {
+                } elseif ($subrownilai->nilai_ketrampilan >= 91 && $subrownilai->nilai_ketrampilan <= 100) {
                   echo "A";
                 }
                 ?></td>
-              <td valign="middle"><?php echo $rownilai->ketrampilan; ?></td>
+              <td valign="middle"><?php echo $subrownilai->ketrampilan; ?></td>
             </tr>
-            <!-- Cek Apakah ada sub Mapel -->
-
-            <?php
-            //perulangan nilai;;;
-            //Untuk penomoran sub mapel, memanfaatkan pengkodean ASSCI (Karakter ASCII Huruf) <---
-            $s13 = 'a';
-
-            foreach ($nilai_rapor->result() as $subrownilai) {
-              ?>
-                <tr>
-                  <td align="center" valign="middle"></td>
-
-                  <td align="left" valign="middle"><?php echo "$s13. " . ucwords($subrownilai->nama_pelajaran); ?></td>
-                  <?php $s13 = chr(ord($s13) + 1); //Kode ASCII huruf<<--
-                  ?>
-                  <td align="center" valign="middle"><?php echo $subrownilai->nilai_ketrampilan; ?></td>
-                  <td align="center" valign="middle">
-                    <?php if ($subrownilai->nilai_ketrampilan < 73) {
-                      echo "D";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 73 && $subrownilai->nilai_ketrampilan <= 81) {
-                      echo "C";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 82 && $subrownilai->nilai_ketrampilan <= 90) {
-                      echo "B";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 91 && $subrownilai->nilai_ketrampilan <= 100) {
-                      echo "A";
-                    }
-                    ?></td>
-                  <td valign="middle"><?php echo $subrownilai->ketrampilan; ?></td>
-                </tr>
       <?php
-              
-            }
-          
+
+          }
         }
       }
 
@@ -470,59 +406,58 @@ $set_header .= "</tbody></table><br>";
         if ($rownilai->id_kat_mapel == 3) {
 
       ?>
-            <!-- Cek Apakah ini Mapel Utama?? -->
+          <!-- Cek Apakah ini Mapel Utama?? -->
 
+          <tr>
+            <td align="center" valign="middle"><?php echo $noH++; ?></td>
+
+            <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
+            <td align="center" valign="middle"><?php echo $rownilai->nilai_ketrampilan; ?></td>
+            <td align="center" valign="middle">
+              <?php if ($rownilai->nilai_ketrampilan < 73) {
+                echo "D";
+              } elseif ($rownilai->nilai_ketrampilan >= 73 && $rownilai->nilai_ketrampilan <= 81) {
+                echo "C";
+              } elseif ($rownilai->nilai_ketrampilan >= 82 && $rownilai->nilai_ketrampilan <= 90) {
+                echo "B";
+              } elseif ($rownilai->nilai_ketrampilan >= 91 && $rownilai->nilai_ketrampilan <= 100) {
+                echo "A";
+              }
+              ?></td>
+            <td valign="middle"><?php echo $rownilai->ketrampilan; ?></td>
+          </tr>
+          <!-- Cek Apakah ada sub Mapel -->
+
+          <?php
+          //perulangan nilai;;;
+          //Untuk penomoran sub mapel, memanfaatkan pengkodean ASSCI (Karakter ASCII Huruf) <---
+          $s14 = 'a';
+
+          foreach ($nilai_rapor->result() as $subrownilai) {
+          ?>
             <tr>
-              <td align="center" valign="middle"><?php echo $noH++; ?></td>
+              <td align="center" valign="middle"></td>
 
-              <td align="left" valign="middle"><?php echo ucwords($rownilai->nama_pelajaran); ?></td>
-              <td align="center" valign="middle"><?php echo $rownilai->nilai_ketrampilan; ?></td>
+              <td align="left" valign="middle"><?php echo "$s14. " . ucwords($subrownilai->nama_pelajaran); ?></td>
+              <?php $s14 = chr(ord($s14) + 1); //Kode ASCII huruf<<--
+              ?>
+              <td align="center" valign="middle"><?php echo $subrownilai->nilai_ketrampilan; ?></td>
               <td align="center" valign="middle">
-                <?php if ($rownilai->nilai_ketrampilan < 73) {
+                <?php if ($subrownilai->nilai_ketrampilan < 73) {
                   echo "D";
-                } elseif ($rownilai->nilai_ketrampilan >= 73 && $rownilai->nilai_ketrampilan <= 81) {
+                } elseif ($subrownilai->nilai_ketrampilan >= 73 && $subrownilai->nilai_ketrampilan <= 81) {
                   echo "C";
-                } elseif ($rownilai->nilai_ketrampilan >= 82 && $rownilai->nilai_ketrampilan <= 90) {
+                } elseif ($subrownilai->nilai_ketrampilan >= 82 && $subrownilai->nilai_ketrampilan <= 90) {
                   echo "B";
-                } elseif ($rownilai->nilai_ketrampilan >= 91 && $rownilai->nilai_ketrampilan <= 100) {
+                } elseif ($subrownilai->nilai_ketrampilan >= 91 && $subrownilai->nilai_ketrampilan <= 100) {
                   echo "A";
                 }
                 ?></td>
-              <td valign="middle"><?php echo $rownilai->ketrampilan; ?></td>
+              <td valign="middle"><?php echo $subrownilai->ketrampilan; ?></td>
             </tr>
-            <!-- Cek Apakah ada sub Mapel -->
-
-            <?php
-            //perulangan nilai;;;
-            //Untuk penomoran sub mapel, memanfaatkan pengkodean ASSCI (Karakter ASCII Huruf) <---
-            $s14 = 'a';
-
-            foreach ($nilai_rapor->result() as $subrownilai) {
-             ?>
-                <tr>
-                  <td align="center" valign="middle"></td>
-
-                  <td align="left" valign="middle"><?php echo "$s14. " . ucwords($subrownilai->nama_pelajaran); ?></td>
-                  <?php $s14 = chr(ord($s14) + 1); //Kode ASCII huruf<<--
-                  ?>
-                  <td align="center" valign="middle"><?php echo $subrownilai->nilai_ketrampilan; ?></td>
-                  <td align="center" valign="middle">
-                    <?php if ($subrownilai->nilai_ketrampilan < 73) {
-                      echo "D";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 73 && $subrownilai->nilai_ketrampilan <= 81) {
-                      echo "C";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 82 && $subrownilai->nilai_ketrampilan <= 90) {
-                      echo "B";
-                    } elseif ($subrownilai->nilai_ketrampilan >= 91 && $subrownilai->nilai_ketrampilan <= 100) {
-                      echo "A";
-                    }
-                    ?></td>
-                  <td valign="middle"><?php echo $subrownilai->ketrampilan; ?></td>
-                </tr>
       <?php
-              
-            }
-          
+
+          }
         }
       }
 
@@ -557,7 +492,7 @@ $set_header .= "</tbody></table><br>";
   </table>
 
   <div class="page-break"></div>
-  
+
   <br>
 
   <b>D. Ekstra Kurikuler</b><br>
@@ -690,13 +625,13 @@ $set_header .= "</tbody></table><br>";
         <td width="200px">Tinggi</td>
       </tr>
       <tr>
-      <?php if($tinggi_berat == ""):?>
-        <td>-</td>
-        <td>-</td>
-      <?php else:?>
-        <td><?= $tinggi_berat['berat_badan'] ."cm"?></td>
-        <td><?= $tinggi_berat['tinggi_badan'] ."kg"?></td>
-      <?php endif;?>
+        <?php if ($tinggi_berat == "") : ?>
+          <td>-</td>
+          <td>-</td>
+        <?php else : ?>
+          <td><?= $tinggi_berat['berat_badan'] . "cm" ?></td>
+          <td><?= $tinggi_berat['tinggi_badan'] . "kg" ?></td>
+        <?php endif; ?>
       </tr>
 
     </tbody>
