@@ -61,7 +61,7 @@ class M_cetak extends CI_Model{
 
 	// VERSI MUTU YOGYAKARTA
 
-	function get_nilai_rapor($nis,$idkelas,$id_tahun,$semester,$kategori_kls)
+	function get_nilai_rapor($nis,$idkelas,$id_tahun,$semester)
 	{
 		//setup_pelajaran, tbl_kkm, tbl_nilai, tbl_kategori_mapel,
 		$sql = "SELECT katmap.id_kat_mapel,katmap.kategori_mapel,pelajaran.id_pelajaran,pelajaran.nama_pelajaran,kkm.kkm,nilai.nilai_pengetahuan,nilai.nilai_ketrampilan,deskripsi.pengetahuan,deskripsi.ketrampilan 
@@ -70,9 +70,23 @@ class M_cetak extends CI_Model{
 		JOIN tbl_kategori_mapel AS katmap ON katmap.id_kat_mapel=pelajaran.id_kat_mapel 
 		LEFT JOIN tbl_deskripsi_nilai AS deskripsi ON deskripsi.id_nilai=nilai.id_nilai 
 		LEFT JOIN (SELECT id_kkm,kkm,id_pelajaran 
-		FROM tbl_kkm WHERE id_tahun=? AND kategori_kls=?) AS kkm ON nilai.id_pelajaran=kkm.id_pelajaran WHERE nilai.nis=? AND nilai.id_kelas=? AND nilai.id_tahun=? AND nilai.semester=? ORDER BY nilai.id_pelajaran ASC";
+		FROM tbl_kkm WHERE id_tahun=? AND kategori_kls is null) AS kkm ON nilai.id_pelajaran=kkm.id_pelajaran WHERE nilai.nis=? AND nilai.id_kelas=? AND nilai.id_tahun=? AND nilai.semester=? ORDER BY nilai.id_pelajaran ASC";
 
-		return $this->db->query($sql,array($id_tahun,$kategori_kls,$nis,$idkelas,$id_tahun,$semester));
+		return $this->db->query($sql,array($id_tahun,$nis,$idkelas,$id_tahun,$semester));
+	}
+
+	function get_nilai_rapor_ortu($post)
+	{
+		$this->db->select('a.nilai_pengetahuan, a.nilai_ketrampilan, b.nama_pelajaran,b.id_kat_mapel,c.ketrampilan, c.pengetahuan')
+            ->from('tbl_nilai as a')
+			->join('setup_pelajaran as b','a.id_pelajaran=b.id_pelajaran','left')
+			->join('tbl_deskripsi_nilai as c','a.id_nilai=c.id_nilai','left')
+            ->where('a.nis',$post['nis'])
+			->where('a.semester',$post['semester'])
+			->where('a.id_tahun',$post['tahun']);
+        $query = $this->db->get_compiled_select();
+        $data  = $this->db->query($query)->result();
+        return $data;
 	}
 
 	function get_deskripsi_nilai($nis,$idkelas,$id_tahun,$semester)

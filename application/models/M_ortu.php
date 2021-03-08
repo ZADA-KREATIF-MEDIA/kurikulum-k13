@@ -91,14 +91,17 @@ class M_ortu extends CI_Model
             ->where('nis',$nis);
         $query = $this->db->get_compiled_select();
         $data_mhs = $this->db->query($query)->row_array();
-        
+        // print('<pre>');print_r($data_mhs);exit();
 		$this->db->select()
             ->from('tbl_berat_tinggi')
             ->where('id_siswa',$data_mhs['id_siswa']);
         $query = $this->db->get_compiled_select();
-        // print('<pre>');print_r($query);exit();
 		$data = $this->db->query($query)->row_array();
-		return $data;
+        if($data == ""){
+            return 0;
+        } else {
+            return $data;
+        }
     }
 
 }
